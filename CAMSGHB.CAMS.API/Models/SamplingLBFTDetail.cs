@@ -24,7 +24,7 @@ namespace CAMSGHB.CAMS.API.Models
         [StringLength(10)]
         public string BuildingModel { get; set; }
         [Range(0, 99999.99)]
-        public int? NoOfFloor { get; set; }
+        public decimal? NoOfFloor { get; set; }
         [StringLength(40)]
         public string PositionLatitude { get; set; }
         [StringLength(40)]
