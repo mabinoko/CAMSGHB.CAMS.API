@@ -77,12 +77,18 @@ namespace CAMSGHB.CAMS.API.Models
         public virtual DbSet<UserCompRole> UserCompRole { get; set; }
         public virtual DbSet<UseType> UseType { get; set; }
 
+        // Unable to generate entity type for table 'dbo.SamplingworkBZP'. Please see the warning messages.
+        // Unable to generate entity type for table 'dbo.SamplingworkLTF'. Please see the warning messages.
+        // Unable to generate entity type for table 'dbo.SamplingworkFTMain'. Please see the warning messages.
+        // Unable to generate entity type for table 'dbo.SamplingLBFTDetail'. Please see the warning messages.
+        // Unable to generate entity type for table 'dbo.SamplingUFTDetail'. Please see the warning messages.
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=207.148.69.13;Database=dbCams3;User ID=dbcams;Password=123456Ws");
+                optionsBuilder.UseSqlServer("Server=207.148.69.13;Database=DBCams3;User ID=dbcams;Password=123456Ws");
             }
         }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace CAMSGHB.CAMS.API.Models
-{ 
+{
     public partial class NotifyAppraisalRequest
     {
         public long Id { get; set; }

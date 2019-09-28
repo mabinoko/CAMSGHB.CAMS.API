@@ -32,7 +32,7 @@ namespace CAMSGHB_CAMS_API
             services.AddDbContext<DBCams3context>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "CAMSGHB.CAMS.API", Version = "v1" });
             });
         }
 
