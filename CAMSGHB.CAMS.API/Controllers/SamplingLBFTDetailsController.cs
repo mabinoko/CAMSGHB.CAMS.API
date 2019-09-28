@@ -90,7 +90,7 @@ namespace CAMSGHB.CAMS.API.Controllers
 
         [HttpPut("{RSubAppraisalID}")]
         public async Task<IActionResult> PutSamplingLBFTDetail([FromRoute] long RSubAppraisalID, [FromQuery] long RAppraisalID,[FromQuery] string CIFName,[FromQuery] string AANo,[FromQuery]string ConstDeedNo,
-            [FromQuery]string Houseno, [FromQuery]string BuildingModel, [FromQuery]int? NoOfFloor, [FromQuery]string PositionLatitude, [FromQuery]string PositionLongtitude, [FromQuery]bool chkconstruction)
+            [FromQuery]string Houseno, [FromQuery]string BuildingModel, [FromQuery]decimal? NoOfFloor, [FromQuery]string PositionLatitude, [FromQuery]string PositionLongtitude, [FromQuery]bool chkconstruction)
         {
             if (!ModelState.IsValid)
             {
@@ -138,7 +138,7 @@ namespace CAMSGHB.CAMS.API.Controllers
         // POST: api/SamplingLBFTDetails
         [HttpPost]
         public async Task<IActionResult> PostSamplingLBFTDetail([FromQuery] long RSubAppraisalID, [FromQuery] long RAppraisalID, [FromQuery] string CIFName, [FromQuery] string AANo, [FromQuery]string ConstDeedNo,
-            [FromQuery]string Houseno, [FromQuery]string BuildingModel, [FromQuery]int? NoOfFloor, [FromQuery]string PositionLatitude, [FromQuery]string PositionLongtitude, [FromQuery]bool chkconstruction)
+            [FromQuery]string Houseno, [FromQuery]string BuildingModel, [FromQuery]decimal? NoOfFloor, [FromQuery]string PositionLatitude, [FromQuery]string PositionLongtitude, [FromQuery]bool chkconstruction)
         {
             try
             {
