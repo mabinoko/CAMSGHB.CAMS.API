@@ -10,6 +10,7 @@ namespace CAMSGHB.CAMS.API.Models
     [Table("SamplingworkLTF")]
     public class SamplingworkLTF
     {
+        [Key]
         public long RAppraisalID { get; set; }
         public long AppraisalID { get; set; }
         [StringLength(1, MinimumLength = 1)]

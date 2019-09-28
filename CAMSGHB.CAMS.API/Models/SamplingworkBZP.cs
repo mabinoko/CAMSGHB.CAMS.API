@@ -10,6 +10,7 @@ namespace CAMSGHB.CAMS.API.Models
     [Table("SamplingworkBZP")]
     public class SamplingworkBZP
     {
+        [Key]
         public long RAppraisalID {get; set;}
         public long AppraisalID {get; set;}
         [StringLength(1,MinimumLength = 1)]

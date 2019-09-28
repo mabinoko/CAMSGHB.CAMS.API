@@ -10,7 +10,8 @@ namespace CAMSGHB.CAMS.API.Models
     [Table("SamplingworkFTMain")]
     public class SamplingworkFTMain
     {
-       public long RAppraisalID { get; set;}
+        [Key]
+        public long RAppraisalID { get; set;}
        public long AppraisalID {get; set;}
        [StringLength(80)]
        public string ProjectName {get; set;}

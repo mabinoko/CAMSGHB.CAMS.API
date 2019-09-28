@@ -57,11 +57,10 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     iQueryData = _context.Amphur.Where(x => x.Status == data.Status).AsQueryable();
                 }
-                return Ok(iQueryData);
+                return  Ok(iQueryData);
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
         }

@@ -10,6 +10,7 @@ namespace CAMSGHB.CAMS.API.Models
     [Table("SamplingLBFTDetail")]
     public class SamplingLBFTDetail
     {
+        [Key]
         public long RSubAppraisalID { get; set; }
         public long RAppraisalID { get; set; }
         [StringLength(120)]
