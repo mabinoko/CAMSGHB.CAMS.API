@@ -76,13 +76,18 @@ namespace CAMSGHB.CAMS.API.Models
         public virtual DbSet<UserCompany> UserCompany { get; set; }
         public virtual DbSet<UserCompRole> UserCompRole { get; set; }
         public virtual DbSet<UseType> UseType { get; set; }
+        public virtual DbSet<SamplingLBFTDetail> SamplingLBFTDetail { get; set; }
+        public virtual DbSet<SamplingUFTDetail> SamplingUFTDetail { get; set; }
+        public virtual DbSet<SamplingworkBZP> SamplingworkBZP { get; set; }
+        public virtual DbSet<SamplingworkFTMain> SamplingworkFTMain { get; set; }
+        public virtual DbSet<SamplingworkLTF> SamplingworkLTF { get; set; }
 
         // Unable to generate entity type for table 'dbo.SamplingworkBZP'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.SamplingworkLTF'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.SamplingworkFTMain'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.SamplingLBFTDetail'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.SamplingUFTDetail'. Please see the warning messages.
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
