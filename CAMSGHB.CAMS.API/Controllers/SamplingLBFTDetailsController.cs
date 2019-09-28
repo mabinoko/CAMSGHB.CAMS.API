@@ -37,11 +37,11 @@ namespace CAMSGHB.CAMS.API.Controllers
 
                 if (data.RSubAppraisalID != 0)
                 {
-                    iQueryData = _context.SamplingLBFTDetail.Where(x => x.RSubAppraisalID == data.RSubAppraisalID);
+                    iQueryData = _context.SamplingLBFTDetail.Where(x => x.RSubAppraisalID == data.RSubAppraisalID).AsQueryable();
                 }
                 if (data.RAppraisalID != 0)
                 {
-                    iQueryData = _context.SamplingLBFTDetail.Where(x => x.RAppraisalID == data.RAppraisalID);
+                    iQueryData = _context.SamplingLBFTDetail.Where(x => x.RAppraisalID == data.RAppraisalID).AsQueryable();
                 }
                 if (!string.IsNullOrEmpty(data.CIFName))
                 {
@@ -63,9 +63,9 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     iQueryData = _context.SamplingLBFTDetail.Where(x => x.BuildingModel == data.BuildingModel).AsQueryable();
                 }
-                if (data.NoOfFloor != 0)
+                if (data.NoOfFloor != null)
                 {
-                    iQueryData = _context.SamplingLBFTDetail.Where(x => x.NoOfFloor == data.NoOfFloor);
+                    iQueryData = _context.SamplingLBFTDetail.Where(x => x.NoOfFloor == data.NoOfFloor).AsQueryable();
                 }
                 if (!string.IsNullOrEmpty(data.PositionLatitude))
                 {
@@ -79,7 +79,8 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     iQueryData = _context.SamplingLBFTDetail.Where(x => x.chkconstruction == data.chkconstruction).AsQueryable();
                 }
-                return Ok(iQueryData);
+                var getdata = iQueryData.ToList();
+                return Ok(getdata);
             }
             catch (Exception ex)
             {
@@ -111,7 +112,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                         getDataUpdate.ConstDeedNo = ConstDeedNo;
                         getDataUpdate.Houseno = Houseno;
                         getDataUpdate.BuildingModel = BuildingModel;
-                        getDataUpdate.NoOfFloor = NoOfFloor;
+                        getDataUpdate.NoOfFloor = NoOfFloor.GetValueOrDefault();
                         getDataUpdate.PositionLatitude = PositionLatitude;
                         getDataUpdate.PositionLongtitude = PositionLongtitude;
                         getDataUpdate.chkconstruction = chkconstruction;
@@ -150,7 +151,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                     ConstDeedNo = ConstDeedNo,
                     Houseno = Houseno,
                     BuildingModel = BuildingModel,
-                    NoOfFloor = NoOfFloor,
+                    NoOfFloor = NoOfFloor.GetValueOrDefault(),
                     PositionLatitude = PositionLatitude,
                     PositionLongtitude = PositionLongtitude,
                     chkconstruction = chkconstruction,
