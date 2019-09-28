@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CAMSGHB.CAMS.API.Models;
+using CAMSGHB.CAMS.API.Enum;
 
 namespace CAMSGHB.CAMS.API.Controllers
 {
@@ -20,7 +21,6 @@ namespace CAMSGHB.CAMS.API.Controllers
             _context = context;
         }
 
-        // GET: api/Amphurs/5
         [HttpGet]
         public async Task<IActionResult> GetAmphur([FromQuery]Amphur data)
         {
@@ -57,9 +57,6 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     iQueryData = _context.Amphur.Where(x => x.Status == data.Status).AsQueryable();
                 }
-
-
-
                 return Ok(iQueryData);
             }
             catch (Exception ex)
@@ -69,29 +66,64 @@ namespace CAMSGHB.CAMS.API.Controllers
             }
         }
 
-        //PUT: api/Amphurs/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAmphur([FromRoute] long id, [FromBody] Amphur amphur)
+        [HttpPost]
+        public async Task<IActionResult> Post([FromQuery] string amphurName , [FromQuery]string amphurCode, [FromQuery]string provinceCode, [FromQuery]bool status)
+        {
+            try
+            {
+                var insertData = new Amphur
+                {
+                    AmphurName = amphurName,
+                    AmphurCode = amphurCode,
+                    ProvinceCode = provinceCode,
+                    Status = status
+                };
+                using (var context = new DBCams3context())
+                {
+                    context.Amphur.Add(insertData);
+                    context.SaveChanges();
+                }
+                return Ok(EnumMessage.StatusMessage.Success.DataSaved);
+            }
+            catch (Exception ex) 
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("{AmphurId}")]
+        public async Task<IActionResult> PutAmphur([FromRoute] long AmphurId, [FromQuery] string amphurName, [FromQuery]string amphurCode, [FromQuery]string provinceCode, [FromQuery]bool status)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != amphur.AmphurId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(amphur).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                using (var context = new DBCams3context())
+                {
+                    var getDataUpdate = (from updateData in context.Amphur
+                                         where updateData.AmphurId == AmphurId
+                                         select updateData).FirstOrDefault();
+                    if(getDataUpdate != null)
+                    {
+                        getDataUpdate.AmphurName = amphurName;
+                        getDataUpdate.AmphurCode = amphurCode;
+                        getDataUpdate.ProvinceCode = provinceCode;
+                        getDataUpdate.Status = status;
+                       
+                    }
+                     _context.Update(getDataUpdate);
+                     await _context.SaveChangesAsync();
+                }
+                return Ok(EnumMessage.StatusMessage.Success.DataSaveChange);
+               
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AmphurExists(id))
+                if (!AmphurExists(AmphurId))
                 {
                     return NotFound();
                 }
@@ -100,36 +132,17 @@ namespace CAMSGHB.CAMS.API.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
         }
 
-        // POST: api/Amphurs
-
-        [HttpPost]
-        public async Task<IActionResult> PostAmphur([FromBody] Amphur amphur)
+        [HttpDelete("{AmphurId}")]
+        public async Task<IActionResult> DeleteAmphur([FromRoute] long AmphurId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Amphur.Add(amphur);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAmphur", new { id = amphur.AmphurId }, amphur);
-        }
-
-        // DELETE: api/Amphurs/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAmphur([FromRoute] long id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var amphur = await _context.Amphur.FindAsync(id);
+            var amphur = await _context.Amphur.FindAsync(AmphurId);
             if (amphur == null)
             {
                 return NotFound();
@@ -138,7 +151,7 @@ namespace CAMSGHB.CAMS.API.Controllers
             _context.Amphur.Remove(amphur);
             await _context.SaveChangesAsync();
 
-            return Ok(amphur);
+            return Ok(EnumMessage.StatusMessage.Success.DataIsDeleted);
         }
 
         private bool AmphurExists(long id)
