@@ -24,11 +24,11 @@ namespace CAMSGHB.CAMS.API.Models
         [StringLength(10)]
         public string BuildingModel { get; set; }
         [Range(0, 99999.99)]
-        public string NoOfFloor { get; set; }
+        public int? NoOfFloor { get; set; }
         [StringLength(40)]
         public string PositionLatitude { get; set; }
         [StringLength(40)]
         public string PositionLongtitude { get; set; }
-        public bool chkconstruction { get; set; }
+        public bool? chkconstruction { get; set; }
     } 
 }
