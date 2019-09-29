@@ -79,8 +79,8 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     iQueryData = _context.SamplingLBFTDetail.Where(x => x.chkconstruction == data.chkconstruction).AsQueryable();
                 }
-                var getdata = iQueryData.ToList();
-                return Ok(getdata);
+               
+                return Ok(iQueryData);
             }
             catch (Exception ex)
             {
