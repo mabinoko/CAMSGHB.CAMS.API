@@ -367,68 +367,78 @@ namespace CAMSGHB.CAMS.API.Controllers
         [HttpPost]
         public async Task<IActionResult> PostSamplingworkLTF([FromQuery] SamplingworkLTFGetModel samplingworkLTF)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                #region :: Mapper ::
+                var getModelToDbModel = new SamplingworkLTF()
+                {
+                    RAppraisalID = samplingworkLTF.RAppraisalID,
+                    AppraisalID = samplingworkLTF.RAppraisalID,
+                    RJobType = samplingworkLTF.RJobType,
+                    ProjectName = samplingworkLTF.ProjectName,
+                    ProjectCode = samplingworkLTF.ProjectCode,
+                    CIFName = samplingworkLTF.CIFName,
+                    AANo = samplingworkLTF.AANo,
+                    APNO = samplingworkLTF.APNO,
+                    ConstDeedNo = samplingworkLTF.ConstDeedNo,
+                    LandNo = samplingworkLTF.LandNo,
+                    SubCategory = samplingworkLTF.SubCategory,
+                    SplitEntry = samplingworkLTF.SplitEntry,
+                    Street = samplingworkLTF.Street,
+                    SubDistrict = samplingworkLTF.SubDistrict,
+                    District = samplingworkLTF.District,
+                    Province = samplingworkLTF.Province,
+                    AssessCompany = samplingworkLTF.AssessCompany,
+                    MonthCheck = samplingworkLTF.MonthCheck,
+                    LastDateSurvey = samplingworkLTF.LastDateSurvey,
+                    BankDateCheck = samplingworkLTF.BankDateCheck,
+                    checkdevland = samplingworkLTF.checkdevland,
+                    chkpublicutility = samplingworkLTF.chkpublicutility,
+                    chkconstruction = samplingworkLTF.chkconstruction,
+                    chkfacility = samplingworkLTF.chkfacility,
+                    chklandlocation = samplingworkLTF.chklandlocation,
+                    surveybanklist = samplingworkLTF.surveybanklist,
+                    appraisalbanklist = samplingworkLTF.appraisalbanklist,
+                    Ownerbanklist = samplingworkLTF.Ownerbanklist,
+                    Otherdetail = samplingworkLTF.Otherdetail,
+                    Remark = samplingworkLTF.Remark,
+                    Buildingplan = samplingworkLTF.Buildingplan,
+                    Other = samplingworkLTF.Other,
+                    Appraisalchk = samplingworkLTF.Appraisalchk,
+                    CommentDetail = samplingworkLTF.CommentDetail,
+                    AppraisalBankid = samplingworkLTF.AppraisalBankid,
+                    AppraisalDate = samplingworkLTF.AppraisalDate,
+                    chkmistake = samplingworkLTF.chkmistake,
+                    mistakedetail = samplingworkLTF.mistakedetail,
+                    warningletter = samplingworkLTF.warningletter,
+                    warningdetail = samplingworkLTF.warningdetail,
+                    Headteam = samplingworkLTF.Headteam,
+                    datecheck = samplingworkLTF.datecheck,
+                    AssistantAppDirector = samplingworkLTF.AssistantAppDirector,
+                    AssistDate = samplingworkLTF.AssistDate,
+                    AppDirector = samplingworkLTF.AppDirector,
+                    AppDireDate = samplingworkLTF.AppDireDate,
+                    reportdetail = samplingworkLTF.reportdetail,
+                };
+                #endregion
+
+                _context.SamplingworkLTF.Add(getModelToDbModel);
+                await _context.SaveChangesAsync();
+                return Ok(EnumMessage.StatusMessage.Success.DataSaveChange);
             }
-
-            #region :: Mapper ::
-            var getModelToDbModel = new SamplingworkLTF()
+            catch (Exception ex)
             {
-                RAppraisalID = samplingworkLTF.RAppraisalID,
-                AppraisalID = samplingworkLTF.RAppraisalID,
-                RJobType = samplingworkLTF.RJobType,
-                ProjectName = samplingworkLTF.ProjectName,
-                ProjectCode = samplingworkLTF.ProjectCode,
-                CIFName = samplingworkLTF.CIFName,
-                AANo = samplingworkLTF.AANo,
-                APNO = samplingworkLTF.APNO,
-                ConstDeedNo = samplingworkLTF.ConstDeedNo,
-                LandNo = samplingworkLTF.LandNo,
-                SubCategory = samplingworkLTF.SubCategory,
-                SplitEntry = samplingworkLTF.SplitEntry,
-                Street = samplingworkLTF.Street,
-                SubDistrict = samplingworkLTF.SubDistrict,
-                District = samplingworkLTF.District,
-                Province = samplingworkLTF.Province,
-                AssessCompany = samplingworkLTF.AssessCompany,
-                MonthCheck = samplingworkLTF.MonthCheck,
-                LastDateSurvey = samplingworkLTF.LastDateSurvey,
-                BankDateCheck = samplingworkLTF.BankDateCheck,
-                checkdevland = samplingworkLTF.checkdevland,
-                chkpublicutility = samplingworkLTF.chkpublicutility,
-                chkconstruction = samplingworkLTF.chkconstruction,
-                chkfacility = samplingworkLTF.chkfacility,
-                chklandlocation = samplingworkLTF.chklandlocation,
-                surveybanklist = samplingworkLTF.surveybanklist,
-                appraisalbanklist = samplingworkLTF.appraisalbanklist,
-                Ownerbanklist = samplingworkLTF.Ownerbanklist,
-                Otherdetail = samplingworkLTF.Otherdetail,
-                Remark = samplingworkLTF.Remark,
-                Buildingplan = samplingworkLTF.Buildingplan,
-                Other = samplingworkLTF.Other,
-                Appraisalchk = samplingworkLTF.Appraisalchk,
-                CommentDetail = samplingworkLTF.CommentDetail,
-                AppraisalBankid = samplingworkLTF.AppraisalBankid,
-                AppraisalDate = samplingworkLTF.AppraisalDate,
-                chkmistake = samplingworkLTF.chkmistake,
-                mistakedetail = samplingworkLTF.mistakedetail,
-                warningletter = samplingworkLTF.warningletter,
-                warningdetail = samplingworkLTF.warningdetail,
-                Headteam = samplingworkLTF.Headteam,
-                datecheck = samplingworkLTF.datecheck,
-                AssistantAppDirector = samplingworkLTF.AssistantAppDirector,
-                AssistDate = samplingworkLTF.AssistDate,
-                AppDirector = samplingworkLTF.AppDirector,
-                AppDireDate = samplingworkLTF.AppDireDate,
-                reportdetail = samplingworkLTF.reportdetail,
-            };
-            #endregion
 
-            _context.SamplingworkLTF.Add(getModelToDbModel);
-            await _context.SaveChangesAsync();
+                return BadRequest(ex.Message); ;
+            }
+           
 
-            return CreatedAtAction("GetSamplingworkLTF", new { id = samplingworkLTF.RAppraisalID }, samplingworkLTF);
+            //return CreatedAtAction("GetSamplingworkLTF", new { id = samplingworkLTF.RAppraisalID }, samplingworkLTF);
         }
 
         // DELETE: api/SamplingworkLTF/5

@@ -117,10 +117,15 @@ namespace CAMSGHB.CAMS.API.Controllers
                         getDataUpdate.PositionLongtitude = PositionLongtitude;
                         getDataUpdate.chkconstruction = chkconstruction;
                     }
+                    else
+                    {
+                        return Ok(EnumMessage.StatusMessage.Error.NotFoundUpdate);
+                    }
                     _context.Update(getDataUpdate);
                     await _context.SaveChangesAsync();
+                    return Ok(EnumMessage.StatusMessage.Success.DataSaveChange);
                 }
-                return Ok(EnumMessage.StatusMessage.Success.DataSaveChange);
+               
             }
             catch (DbUpdateConcurrencyException)
             {
