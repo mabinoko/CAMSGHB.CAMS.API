@@ -23,7 +23,7 @@ namespace CAMSGHB.CAMS.API.Controllers
 
         // GET: api/SamplingworkFTMain/5
         [HttpGet]
-        public async Task<IActionResult> GetSamplingworkFTMain([FromBody] SamplingworkFTMainGetModel data)
+        public async Task<IActionResult> GetSamplingworkFTMain([FromQuery] SamplingworkFTMainGetModel data)
         {
             try
             {
@@ -194,7 +194,7 @@ namespace CAMSGHB.CAMS.API.Controllers
 
         // POST: api/SamplingworkFTMain
         [HttpPost]
-        public async Task<IActionResult> PostSamplingworkFTMain([FromBody] SamplingworkFTMain samplingworkFTMain)
+        public async Task<IActionResult> PostSamplingworkFTMain([FromQuery] SamplingworkFTMain samplingworkFTMain)
         {
             try
             {

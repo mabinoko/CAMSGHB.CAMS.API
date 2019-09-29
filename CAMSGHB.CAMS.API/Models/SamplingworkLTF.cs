@@ -101,6 +101,9 @@ namespace CAMSGHB.CAMS.API.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AppDireDate { get; set; }
+
+        [StringLength(255)]
+        public string reportdetail { get; set; }
     }
 
     public class SamplingworkLTFGetModel
@@ -190,5 +193,8 @@ namespace CAMSGHB.CAMS.API.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AppDireDate { get; set; }
+
+        [StringLength(255)]
+        public string reportdetail { get; set; }
     }
 }

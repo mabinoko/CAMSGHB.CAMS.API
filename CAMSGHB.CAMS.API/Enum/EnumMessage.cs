@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,20 @@ namespace CAMSGHB.CAMS.API.Enum
                 public const string DataIsDeleted = "ระบบทำการลบข้อมูล เรียบร้อยแล้ว";
             }
 
+            public struct Error
+            {
+                public const string NotFoundUpdate = "ไม่พบข้อมูลที่ต้องการแก้ไข";
+            }
+
+        }
+
+
+        public class DateFormatConverter : IsoDateTimeConverter
+        {
+            public DateFormatConverter(string format)
+            {
+                DateTimeFormat = format;
+            }
         }
     }
 }

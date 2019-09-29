@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using static CAMSGHB.CAMS.API.Enum.EnumMessage;
 
 namespace CAMSGHB.CAMS.API.Models
 {
@@ -45,12 +47,17 @@ namespace CAMSGHB.CAMS.API.Models
         [StringLength(50)]
         public string AssessCompany {get; set;}
         public int? MonthCheck {get; set;}
+
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? LastDateSurvey {get; set;}
+
         [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd-MM-yyyy")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? BankDateCheck {get; set;}
+
         public bool? checkdevland {get; set;}
         public bool? chkpublicutility {get; set;}
         public bool? chkconstruction {get; set;}
@@ -71,9 +78,12 @@ namespace CAMSGHB.CAMS.API.Models
         public string CommentDetail {get; set;}
         [StringLength(25)]
         public string AppraisalBankid {get; set;}
+
         [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd-MM-yyyy")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AppraisalDate {get; set;}
+
         public bool? chkmistake {get; set;}
         [StringLength(200)]
         public string mistakedetail {get; set;}
@@ -84,18 +94,29 @@ namespace CAMSGHB.CAMS.API.Models
         public string Headteam {get; set;}
 
         [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd-MM-yyyy")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? datecheck {get; set;}
+
         [StringLength(25)]
         public string AssistantAppDirector {get; set;}
+
         [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd-MM-yyyy")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AssistDate {get; set;}
+
         [StringLength(25)]
         public string AppDirector {get; set;}
+
         [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd-MM-yyyy")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AppDireDate {get; set;}
+
+        [StringLength(255)]
+        public string reportdetail { get; set; }
+
     }
 
     public class SamplingworkBZPGetModel
@@ -134,12 +155,17 @@ namespace CAMSGHB.CAMS.API.Models
         [StringLength(50)]
         public string AssessCompany { get; set; }
         public int? MonthCheck { get; set; }
+
         [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd-MM-yyyy")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? LastDateSurvey { get; set; }
+
         [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd-MM-yyyy")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? BankDateCheck { get; set; }
+
         public bool? checkdevland { get; set; }
         public bool? chkpublicutility { get; set; }
         public bool? chkconstruction { get; set; }
@@ -160,9 +186,12 @@ namespace CAMSGHB.CAMS.API.Models
         public string CommentDetail { get; set; }
         [StringLength(25)]
         public string AppraisalBankid { get; set; }
+
         [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd-MM-yyyy")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AppraisalDate { get; set; }
+
         public bool? chkmistake { get; set; }
         [StringLength(200)]
         public string mistakedetail { get; set; }
@@ -173,17 +202,27 @@ namespace CAMSGHB.CAMS.API.Models
         public string Headteam { get; set; }
 
         [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd-MM-yyyy")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? datecheck { get; set; }
+
         [StringLength(25)]
         public string AssistantAppDirector { get; set; }
+
         [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd-MM-yyyy")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AssistDate { get; set; }
+
         [StringLength(25)]
         public string AppDirector { get; set; }
+
         [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd-MM-yyyy")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AppDireDate { get; set; }
+
+        [StringLength(255)]
+        public string reportdetail { get; set; }
     }
 }

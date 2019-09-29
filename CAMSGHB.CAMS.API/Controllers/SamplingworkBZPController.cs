@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CAMSGHB.CAMS.API.Models;
+using CAMSGHB.CAMS.API.Enum;
 
 namespace CAMSGHB.CAMS.API.Controllers
 {
@@ -20,10 +21,6 @@ namespace CAMSGHB.CAMS.API.Controllers
             _context = context;
         }
 
-        // GET: api/SamplingworkBZP
-       
-
-        // GET: api/SamplingworkBZP/5
         [HttpGet]
         public async Task<IActionResult> GetSamplingworkBZP([FromQuery] SamplingworkBZPGetModel data)
         {
@@ -292,37 +289,29 @@ namespace CAMSGHB.CAMS.API.Controllers
         [HttpPut]
         public async Task<IActionResult> PutSamplingworkBZP([FromQuery] SamplingworkBZP samplingworkBZP)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (RAppraisalID != samplingworkBZP.RAppraisalID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(samplingworkBZP).State = EntityState.Modified;
-
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var check = _context.SamplingworkBZP.Where(x => x.RAppraisalID == samplingworkBZP.RAppraisalID).FirstOrDefault();
+                
+                if (check == null)
+                {
+                    return NotFound(EnumMessage.StatusMessage.Error.NotFoundUpdate);
+                }
+
+                _context.Entry(samplingworkBZP).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+                return Ok(EnumMessage.StatusMessage.Success.DataSaveChange);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!SamplingworkBZPExists(RAppraisalID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest(ex.Message);
             }
-
-            return NoContent();
         }
-
+     
         // POST: api/SamplingworkBZP
         [HttpPost]
         public async Task<IActionResult> PostSamplingworkBZP([FromQuery] SamplingworkBZPGetModel samplingworkBZP)
@@ -333,9 +322,61 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                var convertSamplingworkBZP = (SamplingworkBZP)samplingworkBZP;
 
-                _context.SamplingworkBZP.Add(samplingworkBZP);
+                #region :: MapperData ::
+                var getModelToDbModel = new SamplingworkBZP()
+                {
+                      RAppraisalID = samplingworkBZP.RAppraisalID,
+                      AppraisalID = samplingworkBZP.RAppraisalID,
+                      RJobType = samplingworkBZP.RJobType,
+                      ProjectName = samplingworkBZP.ProjectName,
+                      ProjectCode = samplingworkBZP.ProjectCode,
+                      CIFName = samplingworkBZP.CIFName,
+                      AANo = samplingworkBZP.AANo,
+                      APNO = samplingworkBZP.APNO,
+                      ConstDeedNo = samplingworkBZP.ConstDeedNo,
+                      LandNo = samplingworkBZP.LandNo,
+                      SubCategory = samplingworkBZP.SubCategory,
+                      SplitEntry = samplingworkBZP.SplitEntry,
+                      Street = samplingworkBZP.Street,
+                      SubDistrict = samplingworkBZP.SubDistrict,
+                      District = samplingworkBZP.District,
+                      Province = samplingworkBZP.Province,
+                      AssessCompany = samplingworkBZP.AssessCompany,
+                      MonthCheck = samplingworkBZP.MonthCheck,
+                      LastDateSurvey = samplingworkBZP.LastDateSurvey,
+                      BankDateCheck = samplingworkBZP.BankDateCheck,
+                      checkdevland = samplingworkBZP.checkdevland,
+                      chkpublicutility = samplingworkBZP.chkpublicutility,
+                      chkconstruction = samplingworkBZP.chkconstruction,
+                      chkfacility = samplingworkBZP.chkfacility,
+                      chklandlocation = samplingworkBZP.chklandlocation,
+                      surveybanklist = samplingworkBZP.surveybanklist,
+                      appraisalbanklist = samplingworkBZP.appraisalbanklist,
+                      Ownerbanklist = samplingworkBZP.Ownerbanklist,
+                      Otherdetail = samplingworkBZP.Otherdetail,
+                      Remark = samplingworkBZP.Remark,
+                      Buildingplan = samplingworkBZP.Buildingplan,
+                      Other = samplingworkBZP.Other,
+                      Appraisalchk = samplingworkBZP.Appraisalchk,
+                      CommentDetail = samplingworkBZP.CommentDetail,
+                      AppraisalBankid = samplingworkBZP.AppraisalBankid,
+                      AppraisalDate = samplingworkBZP.AppraisalDate,
+                      chkmistake = samplingworkBZP.chkmistake,
+                      mistakedetail = samplingworkBZP.mistakedetail,
+                      warningletter = samplingworkBZP.warningletter,
+                      warningdetail = samplingworkBZP.warningdetail,
+                      Headteam = samplingworkBZP.Headteam,
+                      datecheck = samplingworkBZP.datecheck,
+                      AssistantAppDirector = samplingworkBZP.AssistantAppDirector,
+                      AssistDate = samplingworkBZP.AssistDate,
+                      AppDirector = samplingworkBZP.AppDirector,
+                      AppDireDate = samplingworkBZP.AppDireDate,
+                      reportdetail = samplingworkBZP.reportdetail,
+                };
+                #endregion
+
+                _context.SamplingworkBZP.Add(getModelToDbModel);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction("GetSamplingworkBZP", new { id = samplingworkBZP.RAppraisalID }, samplingworkBZP);
