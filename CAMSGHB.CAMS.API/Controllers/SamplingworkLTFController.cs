@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CAMSGHB.CAMS.API.Models;
+using CAMSGHB.CAMS.API.Enum;
 
 namespace CAMSGHB.CAMS.API.Controllers
 {
@@ -14,7 +15,7 @@ namespace CAMSGHB.CAMS.API.Controllers
     public class SamplingworkLTFController : ControllerBase
     {
         private readonly DBCams3context _context;
-
+       
         public SamplingworkLTFController(DBCams3context context)
         {
             _context = context;
@@ -289,35 +290,29 @@ namespace CAMSGHB.CAMS.API.Controllers
         [HttpPut]
         public async Task<IActionResult> PutSamplingworkLTF([FromQuery] SamplingworkLTF samplingworkLTF)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var RAppraisalID = samplingworkLTF.RAppraisalID;
-            if (RAppraisalID != samplingworkLTF.RAppraisalID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(samplingworkLTF).State = EntityState.Modified;
 
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var check = _context.SamplingworkLTF.Where(x => x.RAppraisalID == samplingworkLTF.RAppraisalID).FirstOrDefault();
+
+                if (check == null)
+                {
+                    return NotFound(EnumMessage.StatusMessage.Error.NotFoundUpdate);
+                }
+
+                _context.Entry(samplingworkLTF).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+                return Ok(EnumMessage.StatusMessage.Success.DataSaveChange);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!SamplingworkLTFExists(RAppraisalID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest(ex.Message);
             }
 
-            return NoContent();
         }
 
         // POST: api/SamplingworkLTF
@@ -329,7 +324,60 @@ namespace CAMSGHB.CAMS.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.SamplingworkLTF.Add(samplingworkLTF);
+            #region :: Mapper ::
+            var getModelToDbModel = new SamplingworkLTF()
+            {
+                RAppraisalID = samplingworkLTF.RAppraisalID,
+                AppraisalID = samplingworkLTF.RAppraisalID,
+                RJobType = samplingworkLTF.RJobType,
+                ProjectName = samplingworkLTF.ProjectName,
+                ProjectCode = samplingworkLTF.ProjectCode,
+                CIFName = samplingworkLTF.CIFName,
+                AANo = samplingworkLTF.AANo,
+                APNO = samplingworkLTF.APNO,
+                ConstDeedNo = samplingworkLTF.ConstDeedNo,
+                LandNo = samplingworkLTF.LandNo,
+                SubCategory = samplingworkLTF.SubCategory,
+                SplitEntry = samplingworkLTF.SplitEntry,
+                Street = samplingworkLTF.Street,
+                SubDistrict = samplingworkLTF.SubDistrict,
+                District = samplingworkLTF.District,
+                Province = samplingworkLTF.Province,
+                AssessCompany = samplingworkLTF.AssessCompany,
+                MonthCheck = samplingworkLTF.MonthCheck,
+                LastDateSurvey = samplingworkLTF.LastDateSurvey,
+                BankDateCheck = samplingworkLTF.BankDateCheck,
+                checkdevland = samplingworkLTF.checkdevland,
+                chkpublicutility = samplingworkLTF.chkpublicutility,
+                chkconstruction = samplingworkLTF.chkconstruction,
+                chkfacility = samplingworkLTF.chkfacility,
+                chklandlocation = samplingworkLTF.chklandlocation,
+                surveybanklist = samplingworkLTF.surveybanklist,
+                appraisalbanklist = samplingworkLTF.appraisalbanklist,
+                Ownerbanklist = samplingworkLTF.Ownerbanklist,
+                Otherdetail = samplingworkLTF.Otherdetail,
+                Remark = samplingworkLTF.Remark,
+                Buildingplan = samplingworkLTF.Buildingplan,
+                Other = samplingworkLTF.Other,
+                Appraisalchk = samplingworkLTF.Appraisalchk,
+                CommentDetail = samplingworkLTF.CommentDetail,
+                AppraisalBankid = samplingworkLTF.AppraisalBankid,
+                AppraisalDate = samplingworkLTF.AppraisalDate,
+                chkmistake = samplingworkLTF.chkmistake,
+                mistakedetail = samplingworkLTF.mistakedetail,
+                warningletter = samplingworkLTF.warningletter,
+                warningdetail = samplingworkLTF.warningdetail,
+                Headteam = samplingworkLTF.Headteam,
+                datecheck = samplingworkLTF.datecheck,
+                AssistantAppDirector = samplingworkLTF.AssistantAppDirector,
+                AssistDate = samplingworkLTF.AssistDate,
+                AppDirector = samplingworkLTF.AppDirector,
+                AppDireDate = samplingworkLTF.AppDireDate,
+                reportdetail = samplingworkLTF.reportdetail,
+            };
+            #endregion
+
+            _context.SamplingworkLTF.Add(getModelToDbModel);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetSamplingworkLTF", new { id = samplingworkLTF.RAppraisalID }, samplingworkLTF);
