@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using CAMSGHB.CAMS.API.Middleware;
 using CAMSGHB.CAMS.API.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +27,6 @@ namespace CAMSGHB_CAMS_API
         }
 
         public IConfiguration Configuration { get; }
-        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -43,6 +43,8 @@ namespace CAMSGHB_CAMS_API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            String SwaggerEndpoint = "/swagger/v1/swagger.json";
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -50,16 +52,25 @@ namespace CAMSGHB_CAMS_API
             else
             {
                 app.UseHsts();
+                SwaggerEndpoint = "/CAMS/swagger/v1/swagger.json";
             }
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint(SwaggerEndpoint, "CAMSGHB API");
                 c.DisplayOperationId();
             });
-
+            app.UseSwaggerAuthorized();
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+    }
+
+    public static class SwaggerAuthorizeExtensions
+    {
+        public static IApplicationBuilder UseSwaggerAuthorized(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<SwaggerAuthorizedMiddleware>();
         }
     }
 }
