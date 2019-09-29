@@ -295,16 +295,65 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                var check = _context.SamplingworkBZP.Where(x => x.RAppraisalID == samplingworkBZP.RAppraisalID).FirstOrDefault();
-                
-                if (check == null)
+                var updateData = _context.SamplingworkBZP.Where(x => x.RAppraisalID == samplingworkBZP.RAppraisalID).FirstOrDefault();
+                if (updateData == null)
                 {
                     return NotFound(EnumMessage.StatusMessage.Error.NotFoundUpdate);
                 }
+                else
+                {
+                    updateData.RJobType = samplingworkBZP.RJobType;
+                    updateData.ProjectName = samplingworkBZP.ProjectName;
+                    updateData.ProjectCode = samplingworkBZP.ProjectCode;
+                    updateData.CIFName = samplingworkBZP.CIFName;
+                    updateData.AANo = samplingworkBZP.AANo;
+                    updateData.APNO = samplingworkBZP.APNO;
+                    updateData.ConstDeedNo = samplingworkBZP.ConstDeedNo;
+                    updateData.LandNo = samplingworkBZP.LandNo;
+                    updateData.SubCategory = samplingworkBZP.SubCategory;
+                    updateData.SplitEntry = samplingworkBZP.SplitEntry;
+                    updateData.Street = samplingworkBZP.Street;
+                    updateData.SubDistrict = samplingworkBZP.SubDistrict;
+                    updateData.District = samplingworkBZP.District;
+                    updateData.Province = samplingworkBZP.Province;
+                    updateData.AssessCompany = samplingworkBZP.AssessCompany;
+                    updateData.MonthCheck = samplingworkBZP.MonthCheck;
+                    updateData.LastDateSurvey = samplingworkBZP.LastDateSurvey;
+                    updateData.BankDateCheck = samplingworkBZP.BankDateCheck;
+                    updateData.checkdevland = samplingworkBZP.checkdevland;
+                    updateData.chkpublicutility = samplingworkBZP.chkpublicutility;
+                    updateData.chkconstruction = samplingworkBZP.chkconstruction;
+                    updateData.chkfacility = samplingworkBZP.chkfacility;
+                    updateData.chklandlocation = samplingworkBZP.chklandlocation;
+                    updateData.surveybanklist = samplingworkBZP.surveybanklist;
+                    updateData.appraisalbanklist = samplingworkBZP.appraisalbanklist;
+                    updateData.Ownerbanklist = samplingworkBZP.Ownerbanklist;
+                    updateData.Otherdetail = samplingworkBZP.Otherdetail;
+                    updateData.Remark = samplingworkBZP.Remark;
+                    updateData.Buildingplan = samplingworkBZP.Buildingplan;
+                    updateData.Other = samplingworkBZP.Other;
+                    updateData.Appraisalchk = samplingworkBZP.Appraisalchk;
+                    updateData.CommentDetail = samplingworkBZP.CommentDetail;
+                    updateData.AppraisalBankid = samplingworkBZP.AppraisalBankid;
+                    updateData.AppraisalDate = samplingworkBZP.AppraisalDate;
+                    updateData.chkmistake = samplingworkBZP.chkmistake;
+                    updateData.mistakedetail = samplingworkBZP.mistakedetail;
+                    updateData.warningletter = samplingworkBZP.warningletter;
+                    updateData.warningdetail = samplingworkBZP.warningdetail;
+                    updateData.Headteam = samplingworkBZP.Headteam;
+                    updateData.datecheck = samplingworkBZP.datecheck;
+                    updateData.AssistantAppDirector = samplingworkBZP.AssistantAppDirector;
+                    updateData.AssistDate = samplingworkBZP.AssistDate;
+                    updateData.AppDirector = samplingworkBZP.AppDirector;
+                    updateData.AppDireDate = samplingworkBZP.AppDireDate;
+                    updateData.reportdetail = samplingworkBZP.reportdetail;
+                    _context.Update(updateData);
+                    await _context.SaveChangesAsync();
+                    return Ok(EnumMessage.StatusMessage.Success.DataSaveChange);
+                }
 
-                _context.Entry(samplingworkBZP).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-                return Ok(EnumMessage.StatusMessage.Success.DataSaveChange);
+               
+                
             }
             catch (Exception ex)
             {

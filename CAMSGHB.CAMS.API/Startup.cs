@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using CAMSGHB.CAMS.API.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,7 +38,6 @@ namespace CAMSGHB_CAMS_API
             {
                 c.SwaggerDoc("v1", new Info { Title = "CAMSGHB.CAMS.API", Version = "v1" });
             });
-            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

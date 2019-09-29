@@ -297,16 +297,64 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                var check = _context.SamplingworkLTF.Where(x => x.RAppraisalID == samplingworkLTF.RAppraisalID).FirstOrDefault();
+              
 
-                if (check == null)
+                var updateData = _context.SamplingworkLTF.Where(x => x.RAppraisalID == samplingworkLTF.RAppraisalID).FirstOrDefault();
+                if (updateData == null)
                 {
                     return NotFound(EnumMessage.StatusMessage.Error.NotFoundUpdate);
                 }
-
-                _context.Entry(samplingworkLTF).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-                return Ok(EnumMessage.StatusMessage.Success.DataSaveChange);
+                else
+                {
+                    updateData.RJobType = samplingworkLTF.RJobType;
+                    updateData.ProjectName = samplingworkLTF.ProjectName;
+                    updateData.ProjectCode = samplingworkLTF.ProjectCode;
+                    updateData.CIFName = samplingworkLTF.CIFName;
+                    updateData.AANo = samplingworkLTF.AANo;
+                    updateData.APNO = samplingworkLTF.APNO;
+                    updateData.ConstDeedNo = samplingworkLTF.ConstDeedNo;
+                    updateData.LandNo = samplingworkLTF.LandNo;
+                    updateData.SubCategory = samplingworkLTF.SubCategory;
+                    updateData.SplitEntry = samplingworkLTF.SplitEntry;
+                    updateData.Street = samplingworkLTF.Street;
+                    updateData.SubDistrict = samplingworkLTF.SubDistrict;
+                    updateData.District = samplingworkLTF.District;
+                    updateData.Province = samplingworkLTF.Province;
+                    updateData.AssessCompany = samplingworkLTF.AssessCompany;
+                    updateData.MonthCheck = samplingworkLTF.MonthCheck;
+                    updateData.LastDateSurvey = samplingworkLTF.LastDateSurvey;
+                    updateData.BankDateCheck = samplingworkLTF.BankDateCheck;
+                    updateData.checkdevland = samplingworkLTF.checkdevland;
+                    updateData.chkpublicutility = samplingworkLTF.chkpublicutility;
+                    updateData.chkconstruction = samplingworkLTF.chkconstruction;
+                    updateData.chkfacility = samplingworkLTF.chkfacility;
+                    updateData.chklandlocation = samplingworkLTF.chklandlocation;
+                    updateData.surveybanklist = samplingworkLTF.surveybanklist;
+                    updateData.appraisalbanklist = samplingworkLTF.appraisalbanklist;
+                    updateData.Ownerbanklist = samplingworkLTF.Ownerbanklist;
+                    updateData.Otherdetail = samplingworkLTF.Otherdetail;
+                    updateData.Remark = samplingworkLTF.Remark;
+                    updateData.Buildingplan = samplingworkLTF.Buildingplan;
+                    updateData.Other = samplingworkLTF.Other;
+                    updateData.Appraisalchk = samplingworkLTF.Appraisalchk;
+                    updateData.CommentDetail = samplingworkLTF.CommentDetail;
+                    updateData.AppraisalBankid = samplingworkLTF.AppraisalBankid;
+                    updateData.AppraisalDate = samplingworkLTF.AppraisalDate;
+                    updateData.chkmistake = samplingworkLTF.chkmistake;
+                    updateData.mistakedetail = samplingworkLTF.mistakedetail;
+                    updateData.warningletter = samplingworkLTF.warningletter;
+                    updateData.warningdetail = samplingworkLTF.warningdetail;
+                    updateData.Headteam = samplingworkLTF.Headteam;
+                    updateData.datecheck = samplingworkLTF.datecheck;
+                    updateData.AssistantAppDirector = samplingworkLTF.AssistantAppDirector;
+                    updateData.AssistDate = samplingworkLTF.AssistDate;
+                    updateData.AppDirector = samplingworkLTF.AppDirector;
+                    updateData.AppDireDate = samplingworkLTF.AppDireDate;
+                    updateData.reportdetail = samplingworkLTF.reportdetail;
+                    _context.Update(updateData);
+                    await _context.SaveChangesAsync();
+                    return Ok(EnumMessage.StatusMessage.Success.DataSaveChange);
+                }
             }
             catch (Exception ex)
             {
