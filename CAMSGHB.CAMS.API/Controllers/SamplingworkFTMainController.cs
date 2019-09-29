@@ -161,36 +161,49 @@ namespace CAMSGHB.CAMS.API.Controllers
         [HttpPut]
         public async Task<IActionResult> PutSamplingworkFTMain([FromQuery] SamplingworkFTMain samplingworkFTMain)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var RAppraisalID = samplingworkFTMain.RAppraisalID;
-            if (RAppraisalID != samplingworkFTMain.RAppraisalID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(samplingworkFTMain).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SamplingworkFTMainExists(RAppraisalID))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
+                }
+                var updateData = _context.SamplingworkFTMain.Where(x => x.RAppraisalID == samplingworkFTMain.RAppraisalID).FirstOrDefault();
+                if (updateData == null)
+                {
+                    return NotFound(EnumMessage.StatusMessage.Error.NotFoundUpdate);
                 }
                 else
                 {
-                    throw;
+                    updateData.AppraisalID = samplingworkFTMain.AppraisalID;
+                    updateData.ProjectName = samplingworkFTMain.ProjectName;
+                    updateData.ProjectCode = samplingworkFTMain.ProjectCode;
+                    updateData.MonthCheck = samplingworkFTMain.MonthCheck;
+                    updateData.YearCheck = samplingworkFTMain.YearCheck;
+                    updateData.BankDateCheck = samplingworkFTMain.BankDateCheck;
+                    updateData.SubCategory = samplingworkFTMain.SubCategory;
+                    updateData.Landplot = samplingworkFTMain.Landplot;
+                    updateData.RoomPlan = samplingworkFTMain.RoomPlan;
+                    updateData.ProjPlan = samplingworkFTMain.ProjPlan;
+                    updateData.House_Roomno = samplingworkFTMain.House_Roomno;
+                    updateData.Pictures = samplingworkFTMain.Pictures;
+                    updateData.OtherDocument = samplingworkFTMain.OtherDocument;
+                    updateData.AppraisalBankid = samplingworkFTMain.AppraisalBankid;
+                    updateData.AppraisalDate = samplingworkFTMain.AppraisalDate;
+                    updateData.ChkReportBankid = samplingworkFTMain.ChkReportBankid;
+                    updateData.ChkReportdate = samplingworkFTMain.ChkReportdate;
+                    updateData.AssistantAppDirector = samplingworkFTMain.AssistantAppDirector;
+                    updateData.AssistDate = samplingworkFTMain.AssistDate;
+                    _context.Update(updateData);
+                    await _context.SaveChangesAsync();
+                    return Ok(EnumMessage.StatusMessage.Success.DataSaveChange);
                 }
             }
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+        
 
         // POST: api/SamplingworkFTMain
         [HttpPost]
