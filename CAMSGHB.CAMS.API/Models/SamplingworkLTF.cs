@@ -4,12 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
 
 namespace CAMSGHB.CAMS.API.Models
 {
     [Table("SamplingworkLTF")]
-    [DataContract]
     public class SamplingworkLTF
     {
         [Key]
@@ -108,7 +106,6 @@ namespace CAMSGHB.CAMS.API.Models
         public string reportdetail { get; set; }
     }
 
-    [DataContract]
     public class SamplingworkLTFGetModel
     {
         [Key]

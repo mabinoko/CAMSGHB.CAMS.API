@@ -4,12 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
 
 namespace CAMSGHB.CAMS.API.Models
 {
     [Table("SamplingworkFTMain")]
-    [DataContract]
     public class SamplingworkFTMain
     {
         [Key]
@@ -57,7 +55,6 @@ namespace CAMSGHB.CAMS.API.Models
         public DateTime? AssistDate {get; set;}
     }
 
-    [DataContract]
     public class SamplingworkFTMainGetModel
     {
         [Key]

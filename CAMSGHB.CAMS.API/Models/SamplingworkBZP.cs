@@ -5,13 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
 using static CAMSGHB.CAMS.API.Enum.EnumMessage;
 
 namespace CAMSGHB.CAMS.API.Models
 {
     [Table("SamplingworkBZP")]
-    [DataContract]
     public class SamplingworkBZP
     {
         [Key]
@@ -121,7 +119,6 @@ namespace CAMSGHB.CAMS.API.Models
 
     }
 
-    [DataContract]
     public class SamplingworkBZPGetModel
     {
         [Key]
