@@ -209,7 +209,7 @@ namespace CAMSGHB.CAMS.API.Controllers
 
         // POST: api/SamplingworkFTMain
         [HttpPost]
-        public async Task<IActionResult> PostSamplingworkFTMain([FromQuery] SamplingworkFTMain samplingworkFTMain)
+        public async Task<IActionResult> PostSamplingworkFTMain([FromBody] SamplingworkFTMain samplingworkFTMain)
         {
             try
             {

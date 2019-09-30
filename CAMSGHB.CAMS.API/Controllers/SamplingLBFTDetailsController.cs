@@ -144,30 +144,18 @@ namespace CAMSGHB.CAMS.API.Controllers
 
         // POST: api/SamplingLBFTDetails
         [HttpPost]
-        public async Task<IActionResult> PostSamplingLBFTDetail([FromQuery] long RSubAppraisalID, [FromQuery] long RAppraisalID, [FromQuery] string CIFName, [FromQuery] string AANo, [FromQuery]string ConstDeedNo,
-            [FromQuery]string Houseno, [FromQuery]string BuildingModel, [FromQuery]decimal? NoOfFloor, [FromQuery]string PositionLatitude, [FromQuery]string PositionLongtitude, [FromQuery]bool chkconstruction)
+        public async Task<IActionResult> PostSamplingLBFTDetail([FromBody] SamplingLBFTDetail samplingLBFTDetail)
         {
             try
             {
-                var insertData = new SamplingLBFTDetail
+                if (!ModelState.IsValid)
                 {
-                    RSubAppraisalID = RSubAppraisalID,
-                    RAppraisalID = RAppraisalID,
-                    CIFName = CIFName,
-                    AANo = AANo,
-                    ConstDeedNo = ConstDeedNo,
-                    Houseno = Houseno,
-                    BuildingModel = BuildingModel,
-                    NoOfFloor = NoOfFloor.GetValueOrDefault(),
-                    PositionLatitude = PositionLatitude,
-                    PositionLongtitude = PositionLongtitude,
-                    chkconstruction = chkconstruction,
-                };
-                using (var context = new DBCams3context())
-                {
-                    context.SamplingLBFTDetail.Add(insertData);
-                    context.SaveChanges();
+                    return BadRequest(ModelState);
                 }
+
+                _context.SamplingLBFTDetail.Add(samplingLBFTDetail);
+                await _context.SaveChangesAsync();
+
                 return Ok(EnumMessage.StatusMessage.Success.DataSaved);
             }
             catch (Exception ex)

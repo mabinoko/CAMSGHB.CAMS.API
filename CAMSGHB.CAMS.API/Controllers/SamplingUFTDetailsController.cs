@@ -144,30 +144,18 @@ namespace CAMSGHB.CAMS.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostSamplingUFTDetail([FromQuery] long RSubAppraisalID, [FromQuery] long RAppraisalID, [FromQuery] string CIFName, [FromQuery] string AANo, [FromQuery]string RoomNo,
-            [FromQuery]string BuildingNo,[FromQuery]string RegisterNumber, [FromQuery]string FloorNoCondo, [FromQuery]string PositionLatitude, [FromQuery]string PositionLongtitude, [FromQuery]bool chkconstruction)
+        public async Task<IActionResult> PostSamplingUFTDetail([FromBody] SamplingUFTDetail samplingUFTDetail)
         {
             try
             {
-                var insertData = new SamplingUFTDetail
+                if (!ModelState.IsValid)
                 {
-                    RSubAppraisalID = RSubAppraisalID,
-                    RAppraisalID = RAppraisalID,
-                    CIFName = CIFName,
-                    AANo = AANo,
-                    RoomNo = RoomNo,
-                    BuildingNo = BuildingNo,
-                    RegisterNumber = RegisterNumber,
-                    FloorNoCondo = FloorNoCondo,
-                    PositionLatitude = PositionLatitude,
-                    PositionLongtitude = PositionLongtitude,
-                    chkconstruction = chkconstruction,
-                };
-                using (var context = new DBCams3context())
-                {
-                    context.SamplingUFTDetail.Add(insertData);
-                    context.SaveChanges();
+                    return BadRequest(ModelState);
                 }
+
+                _context.SamplingUFTDetail.Add(samplingUFTDetail);
+                await _context.SaveChangesAsync();
+
                 return Ok(EnumMessage.StatusMessage.Success.DataSaved);
             }
             catch (Exception ex)
