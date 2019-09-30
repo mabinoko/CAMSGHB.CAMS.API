@@ -14,8 +14,9 @@ namespace CAMSGHB.CAMS.API.Models
         [Required]
         public long RAppraisalID { get; set; }
         public long AppraisalID { get; set; }
-        
-        public char RJobType { get; set; }
+
+        [StringLength(1)]
+        public string RJobType { get; set; }
         [StringLength(80)]
         public string ProjectName { get; set; }
         [StringLength(10)]
@@ -112,7 +113,8 @@ namespace CAMSGHB.CAMS.API.Models
         public long RAppraisalID { get; set; }
         public long AppraisalID { get; set; }
 
-        public char RJobType { get; set; }
+        [StringLength(1)]
+        public string RJobType { get; set; }
         [StringLength(80)]
         public string ProjectName { get; set; }
         [StringLength(10)]

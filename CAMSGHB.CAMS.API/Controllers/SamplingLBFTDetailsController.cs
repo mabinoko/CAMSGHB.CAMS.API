@@ -144,7 +144,8 @@ namespace CAMSGHB.CAMS.API.Controllers
 
         // POST: api/SamplingLBFTDetails
         [HttpPost]
-        public async Task<IActionResult> PostSamplingLBFTDetail([FromBody] SamplingLBFTDetail samplingLBFTDetail)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> PostSamplingLBFTDetail([FromForm] SamplingLBFTDetail samplingLBFTDetail)
         {
             try
             {
