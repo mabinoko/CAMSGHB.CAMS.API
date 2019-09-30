@@ -18,11 +18,11 @@ namespace CAMSGHB.CAMS.API.Models
 
         public long AppraisalID { get; set; }
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateCompCheck { get; set; }
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? BankDateCheck { get; set; }
         [StringLength(120)]
@@ -114,7 +114,7 @@ namespace CAMSGHB.CAMS.API.Models
         public string AppraisalBankid { get; set; }
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AppraisalDate { get; set; }
 
@@ -129,7 +129,7 @@ namespace CAMSGHB.CAMS.API.Models
         public string Headteam { get; set; }
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? datecheck { get; set; }
 
@@ -137,7 +137,7 @@ namespace CAMSGHB.CAMS.API.Models
         public string AssistantAppDirector { get; set; }
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AssistDate { get; set; }
 
@@ -145,7 +145,7 @@ namespace CAMSGHB.CAMS.API.Models
         public string AppDirector { get; set; }
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AppDireDate { get; set; }
 
@@ -158,11 +158,11 @@ namespace CAMSGHB.CAMS.API.Models
 
         public long AppraisalID { get; set; }
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateCompCheck { get; set; }
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? BankDateCheck { get; set; }
         [StringLength(120)]
@@ -254,7 +254,7 @@ namespace CAMSGHB.CAMS.API.Models
         public string AppraisalBankid { get; set; }
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AppraisalDate { get; set; }
 
@@ -269,7 +269,7 @@ namespace CAMSGHB.CAMS.API.Models
         public string Headteam { get; set; }
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? datecheck { get; set; }
 
@@ -277,7 +277,7 @@ namespace CAMSGHB.CAMS.API.Models
         public string AssistantAppDirector { get; set; }
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AssistDate { get; set; }
 
@@ -285,7 +285,7 @@ namespace CAMSGHB.CAMS.API.Models
         public string AppDirector { get; set; }
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AppDireDate { get; set; }
 
