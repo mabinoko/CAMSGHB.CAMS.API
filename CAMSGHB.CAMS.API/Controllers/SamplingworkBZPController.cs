@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CAMSGHB.CAMS.API.Models;
 using CAMSGHB.CAMS.API.Enum;
+using Microsoft.AspNetCore.Cors;
 
 namespace CAMSGHB.CAMS.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("MyCORSPolicy")]
     [ApiController]
     public class SamplingworkBZPController : ControllerBase
     {

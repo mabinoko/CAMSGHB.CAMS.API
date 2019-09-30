@@ -31,7 +31,12 @@ namespace CAMSGHB_CAMS_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddCors(options => {
+                options.AddPolicy("MyCORSPolicy", builder => builder
+                 .AllowAnyHeader()
+                 .AllowAnyOrigin()
+                 .AllowAnyMethod());
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<DBCams3context>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddSwaggerGen(c =>
@@ -62,6 +67,7 @@ namespace CAMSGHB_CAMS_API
             });
             app.UseSwaggerAuthorized();
             app.UseHttpsRedirection();
+            app.UseCors("MyCORSPolicy");
             app.UseMvc();
         }
     }
