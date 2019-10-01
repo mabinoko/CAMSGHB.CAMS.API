@@ -344,7 +344,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                     iQueryData = _context.RAppraisalInfo.Where(x => x.AppDireDate == data.AppDireDate).AsQueryable();
                 }
                 #endregion
-
+                //var getdata = iQueryData.ToList();
                 return Ok(iQueryData);
             }
             catch (Exception ex)

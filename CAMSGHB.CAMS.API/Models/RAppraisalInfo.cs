@@ -55,7 +55,7 @@ namespace CAMSGHB.CAMS.API.Models
         public int AreaNgan { get; set; }
         public int AreaRai { get; set; }
         [Range(0, 9999999999999999999.99)]
-        public double AreaWa { get; set; }
+        public decimal AreaWa { get; set; }
         [Range(0, 9999999999999999999.99)]
         public decimal LCAppraisalUPrice { get; set; }
         [Range(0, 9999999999999999999.99)]
@@ -195,7 +195,7 @@ namespace CAMSGHB.CAMS.API.Models
         public int AreaNgan { get; set; }
         public int AreaRai { get; set; }
         [Range(0, 9999999999999999999.99)]
-        public double AreaWa { get; set; }
+        public decimal AreaWa { get; set; }
         [Range(0, 9999999999999999999.99)]
         public decimal LCAppraisalUPrice { get; set; }
         [Range(0, 9999999999999999999.99)]
