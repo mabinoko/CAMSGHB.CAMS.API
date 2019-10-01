@@ -78,7 +78,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                     iQueryData = _context.SamplingworkFTMain.Where(x => x.BankDateCheck == data.BankDateCheck).AsQueryable();
                 }
 
-                if (string.IsNullOrEmpty(data.RJobType))
+                if (!string.IsNullOrEmpty(data.RJobType))
                 {
                     iQueryData = _context.SamplingworkFTMain.Where(x => x.RJobType == data.RJobType).AsQueryable();
                 }
