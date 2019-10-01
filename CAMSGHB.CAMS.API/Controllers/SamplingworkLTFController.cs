@@ -456,9 +456,6 @@ namespace CAMSGHB.CAMS.API.Controllers
 
                 return BadRequest(ex.Message); ;
             }
-           
-
-            //return CreatedAtAction("GetSamplingworkLTF", new { id = samplingworkLTF.RAppraisalID }, samplingworkLTF);
         }
 
         // DELETE: api/SamplingworkLTF/5
