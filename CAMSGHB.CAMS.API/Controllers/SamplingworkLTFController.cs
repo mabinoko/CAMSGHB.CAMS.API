@@ -367,7 +367,8 @@ namespace CAMSGHB.CAMS.API.Controllers
 
         // POST: api/SamplingworkLTF
         [HttpPost]
-        public async Task<IActionResult> PostSamplingworkLTF([FromBody] SamplingworkLTFGetModel samplingworkLTF)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> PostSamplingworkLTF([FromForm] SamplingworkLTFGetModel samplingworkLTF)
         {
             try
             {

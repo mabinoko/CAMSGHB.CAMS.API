@@ -24,8 +24,9 @@ namespace CAMSGHB.CAMS.API.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? BankDateCheck {get; set;}
-        
-        public char RJobType {get; set;}
+
+        [StringLength(1)]
+        public string RJobType {get; set;}
         [StringLength(10)]
         public string SubCategory {get; set;}
         public bool? Landplot {get; set;}
@@ -70,8 +71,9 @@ namespace CAMSGHB.CAMS.API.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? BankDateCheck { get; set; }
-       
-        public char RJobType { get; set; }
+
+        [StringLength(1)]
+        public string RJobType { get; set; }
         [StringLength(10)]
         public string SubCategory { get; set; }
         public bool? Landplot { get; set; }

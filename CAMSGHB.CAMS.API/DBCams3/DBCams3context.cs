@@ -81,12 +81,14 @@ namespace CAMSGHB.CAMS.API.Models
         public virtual DbSet<SamplingworkBZP> SamplingworkBZP { get; set; }
         public virtual DbSet<SamplingworkFTMain> SamplingworkFTMain { get; set; }
         public virtual DbSet<SamplingworkLTF> SamplingworkLTF { get; set; }
+        public virtual DbSet<RAppraisalInfo> RAppraisalInfo { get; set; }
 
         // Unable to generate entity type for table 'dbo.SamplingworkBZP'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.SamplingworkLTF'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.SamplingworkFTMain'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.SamplingLBFTDetail'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.SamplingUFTDetail'. Please see the warning messages.
+        // Unable to generate entity type for table 'dbo.RAppraisalInfo'. Please see the warning messages.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

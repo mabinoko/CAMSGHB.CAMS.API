@@ -365,7 +365,8 @@ namespace CAMSGHB.CAMS.API.Controllers
      
         // POST: api/SamplingworkBZP
         [HttpPost]
-        public async Task<IActionResult> PostSamplingworkBZP([FromBody] SamplingworkBZPGetModel samplingworkBZP)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> PostSamplingworkBZP([FromForm] SamplingworkBZPGetModel samplingworkBZP)
         {
             try
             {

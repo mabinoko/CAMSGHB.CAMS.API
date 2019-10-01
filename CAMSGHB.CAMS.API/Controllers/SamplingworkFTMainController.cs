@@ -78,7 +78,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                     iQueryData = _context.SamplingworkFTMain.Where(x => x.BankDateCheck == data.BankDateCheck).AsQueryable();
                 }
 
-                if (data.RJobType != 0)
+                if (string.IsNullOrEmpty(data.RJobType))
                 {
                     iQueryData = _context.SamplingworkFTMain.Where(x => x.RJobType == data.RJobType).AsQueryable();
                 }
@@ -209,7 +209,8 @@ namespace CAMSGHB.CAMS.API.Controllers
 
         // POST: api/SamplingworkFTMain
         [HttpPost]
-        public async Task<IActionResult> PostSamplingworkFTMain([FromBody] SamplingworkFTMain samplingworkFTMain)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> PostSamplingworkFTMain([FromForm] SamplingworkFTMain samplingworkFTMain)
         {
             try
             {

@@ -144,7 +144,8 @@ namespace CAMSGHB.CAMS.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostSamplingUFTDetail([FromBody] SamplingUFTDetail samplingUFTDetail)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> PostSamplingUFTDetail([FromForm] SamplingUFTDetail samplingUFTDetail)
         {
             try
             {
