@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CAMSGHB.CAMS.API.Models;
 using Microsoft.AspNetCore.Cors;
 using CAMSGHB.CAMS.API.Enum;
+using System.Data.SqlClient;
 
 namespace CAMSGHB.CAMS.API.Controllers
 {
@@ -449,17 +450,115 @@ namespace CAMSGHB.CAMS.API.Controllers
       
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> PostRAppraisalInfo([FromForm] RAppraisalInfo rAppraisalInfo)
+        public async Task<IActionResult> PostRAppraisalInfo([FromForm] RAppraisalInfoPostMode rAppraisalInfo)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var insertdata = new RAppraisalInfo
+                {
+                    //RAppraisalID = 0,
+                    AppraisalID = rAppraisalInfo.AppraisalID,
+                    DateCompCheck = rAppraisalInfo.DateCompCheck,
+                    BankDateCheck = rAppraisalInfo.BankDateCheck,
+                    CIFName = rAppraisalInfo.CIFName,
+                    MonthCheck = rAppraisalInfo.MonthCheck,
+                    YearCheck = rAppraisalInfo.YearCheck,
+                    APPNO = rAppraisalInfo.APPNO,
+                    ProjectName = rAppraisalInfo.ProjectName,
+                    Houseno = rAppraisalInfo.Houseno,
+                    Street = rAppraisalInfo.Street,
+                    SubDistrict = rAppraisalInfo.SubDistrict,
+                    District = rAppraisalInfo.District,
+                    Province = rAppraisalInfo.Province,
+                    LandLocationDetail = rAppraisalInfo.LandLocationDetail,
+                    Publicutility = rAppraisalInfo.Publicutility,
+                    Otherdetail = rAppraisalInfo.Otherdetail,
+                    DocumentType = rAppraisalInfo.DocumentType,
+                    DocumentNo = rAppraisalInfo.DocumentNo,
+                    AreaNgan = rAppraisalInfo.AreaNgan,
+                    AreaRai = rAppraisalInfo.AreaRai,
+                    AreaWa = rAppraisalInfo.AreaWa,
+                    LCAppraisalUPrice = rAppraisalInfo.LCAppraisalUPrice,
+                    LCAppraisalPrice = rAppraisalInfo.LCAppraisalPrice,
+                    LBAppraisalUPrice = rAppraisalInfo.LBAppraisalUPrice,
+                    LBAppraisalPrice = rAppraisalInfo.LBAppraisalPrice,
+                    LBPriceSuitable = rAppraisalInfo.LBPriceSuitable,
+                    LDAppraisalPrice = rAppraisalInfo.LDAppraisalPrice,
+                    LHigh_lower = rAppraisalInfo.LHigh_lower,
+                    LDiffAppraisalPercent = rAppraisalInfo.LDiffAppraisalPercent,
+                    LAcceptPrice = rAppraisalInfo.LAcceptPrice,
+                    BuildingModel = rAppraisalInfo.BuildingModel,
+                    NoOfFloor = rAppraisalInfo.NoOfFloor,
+                    DocuementAttach = rAppraisalInfo.DocuementAttach,
+                    BCAppraisalPrice = rAppraisalInfo.BCAppraisalPrice,
+                    BBAppraisalPrice = rAppraisalInfo.BBAppraisalPrice,
+                    BDAppraisalPrice = rAppraisalInfo.BDAppraisalPrice,
+                    BHigh_lower = rAppraisalInfo.BHigh_lower,
+                    BDiffAppraisalPercent = rAppraisalInfo.BDiffAppraisalPercent,
+                    BPriceSuitable = rAppraisalInfo.BPriceSuitable,
+                    BAcceptPrice = rAppraisalInfo.BAcceptPrice,
+                    TPriceSuitable = rAppraisalInfo.TPriceSuitable,
+                    TCAppraisalPrice = rAppraisalInfo.TCAppraisalPrice,
+                    TBAppraisalPrice = rAppraisalInfo.TBAppraisalPrice,
+                    TDAppraisalPrice = rAppraisalInfo.TDAppraisalPrice,
+                    THigh_lower = rAppraisalInfo.THigh_lower,
+                    TDiffAppraisalPercent = rAppraisalInfo.TDiffAppraisalPercent,
+                    AppraisalSummary = rAppraisalInfo.AppraisalSummary,
+                    AppraisalList = rAppraisalInfo.AppraisalList,
+                    AppraisalBankid = rAppraisalInfo.AppraisalBankid,
+                    AppraisalDate = rAppraisalInfo.AppraisalDate,
+                    chkmistake = rAppraisalInfo.chkmistake,
+                    mistakedetail = rAppraisalInfo.mistakedetail,
+                    warningletter = rAppraisalInfo.warningletter,
+                    warningdetail = rAppraisalInfo.warningdetail,
+                    Headteam = rAppraisalInfo.Headteam,
+                    datecheck = rAppraisalInfo.datecheck,
+                    AssistantAppDirector = rAppraisalInfo.AssistantAppDirector,
+                    AssistDate = rAppraisalInfo.AssistDate,
+                    AppDirector = rAppraisalInfo.AppDirector,
+                    AppDireDate = rAppraisalInfo.AppDireDate,
+                };
+
+                #region :: genPK ::
+                using (SqlConnection sqlConnection = new SqlConnection(EnumMessage.connectionString.connect))
+                {
+                    sqlConnection.Open();
+                    SqlCommand sql = new SqlCommand(" SELECT NEXT VALUE FOR  dbo.RAppraisalInfo_SEQ", sqlConnection);
+
+                    using (SqlDataReader reader = sql.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            insertdata.RAppraisalID = reader.GetInt64(0);
+                        }
+                    }
+                }
+                #endregion
+
+                _context.Attach(insertdata).State = EntityState.Added;
+                _context.SaveChanges();
+
+
+
+                //_context.SaveChanges();
+
+
+                //_context.RAppraisalInfo.Add(insertdata);
+
+
+                return CreatedAtAction("GetRAppraisalInfo", new { id = insertdata.RAppraisalID }, rAppraisalInfo);
             }
+            catch (Exception ex)
+            {
 
-            _context.RAppraisalInfo.Add(rAppraisalInfo);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetRAppraisalInfo", new { id = rAppraisalInfo.RAppraisalID }, rAppraisalInfo);
+                return BadRequest(ex.Message);
+            }
+           
         }
 
         // DELETE: api/RAppraisalInfoes/5

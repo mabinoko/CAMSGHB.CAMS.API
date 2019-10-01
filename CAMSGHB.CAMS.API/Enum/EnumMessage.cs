@@ -26,6 +26,11 @@ namespace CAMSGHB.CAMS.API.Enum
 
         }
 
+        public class connectionString
+        {
+            public const string connect = "Server=207.148.69.13;Database=DBCams3;User ID=os1;Password=os1";
+        }
+
 
         public class DateFormatConverter : IsoDateTimeConverter
         {
@@ -34,5 +39,6 @@ namespace CAMSGHB.CAMS.API.Enum
                 DateTimeFormat = format;
             }
         }
+
     }
 }
