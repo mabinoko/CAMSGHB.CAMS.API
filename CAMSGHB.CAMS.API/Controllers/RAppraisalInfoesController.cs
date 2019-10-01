@@ -537,6 +537,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                             insertdata.RAppraisalID = reader.GetInt64(0);
                         }
                     }
+                    sqlConnection.Close();
                 }
                 #endregion
 

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CAMSGHB.CAMS.API.Models;
 using CAMSGHB.CAMS.API.Enum;
 using Microsoft.AspNetCore.Cors;
+using System.Data.SqlClient;
 
 namespace CAMSGHB.CAMS.API.Controllers
 {
@@ -368,7 +369,7 @@ namespace CAMSGHB.CAMS.API.Controllers
         // POST: api/SamplingworkLTF
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> PostSamplingworkLTF([FromForm] SamplingworkLTFGetModel samplingworkLTF)
+        public async Task<IActionResult> PostSamplingworkLTF([FromForm] SamplingworkLTFPOstModel samplingworkLTF)
         {
             try
             {
@@ -380,8 +381,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                 #region :: Mapper ::
                 var getModelToDbModel = new SamplingworkLTF()
                 {
-                    RAppraisalID = samplingworkLTF.RAppraisalID,
-                    AppraisalID = samplingworkLTF.RAppraisalID,
+                    AppraisalID = samplingworkLTF.AppraisalID,
                     RJobType = samplingworkLTF.RJobType,
                     ProjectName = samplingworkLTF.ProjectName,
                     ProjectCode = samplingworkLTF.ProjectCode,
@@ -428,6 +428,23 @@ namespace CAMSGHB.CAMS.API.Controllers
                     AppDireDate = samplingworkLTF.AppDireDate,
                     reportdetail = samplingworkLTF.reportdetail,
                 };
+                #endregion
+
+                #region :: genPK ::
+                using (SqlConnection sqlConnection = new SqlConnection(EnumMessage.connectionString.connect))
+                {
+                    sqlConnection.Open();
+                    SqlCommand sql = new SqlCommand(" SELECT NEXT VALUE FOR  dbo.RAppraisalInfo_SEQ", sqlConnection);
+
+                    using (SqlDataReader reader = sql.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            getModelToDbModel.RAppraisalID = reader.GetInt64(0);
+                        }
+                    }
+                    sqlConnection.Close();
+                }
                 #endregion
 
                 _context.SamplingworkLTF.Add(getModelToDbModel);

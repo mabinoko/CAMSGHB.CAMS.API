@@ -13,7 +13,6 @@ namespace CAMSGHB.CAMS.API.Models
     public class RAppraisalInfo
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Required]
         public long? RAppraisalID { get; set; }
 
