@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CAMSGHB.CAMS.API.Models;
 using CAMSGHB.CAMS.API.Enum;
 using Microsoft.AspNetCore.Cors;
+using System.Data.SqlClient;
 
 namespace CAMSGHB.CAMS.API.Controllers
 {
@@ -210,7 +211,7 @@ namespace CAMSGHB.CAMS.API.Controllers
         // POST: api/SamplingworkFTMain
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> PostSamplingworkFTMain([FromForm] SamplingworkFTMain samplingworkFTMain)
+        public async Task<IActionResult> PostSamplingworkFTMain([FromForm] SamplingworkFTMainPOstModel samplingworkFTMain)
         {
             try
             {
@@ -219,7 +220,50 @@ namespace CAMSGHB.CAMS.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                _context.SamplingworkFTMain.Add(samplingworkFTMain);
+
+                var insertData = new SamplingworkFTMain()
+                {
+                    
+                    AppraisalID = samplingworkFTMain.AppraisalID,
+                    ProjectName = samplingworkFTMain.ProjectName,
+                    ProjectCode = samplingworkFTMain.ProjectCode,
+                    MonthCheck = samplingworkFTMain.MonthCheck,
+                    YearCheck = samplingworkFTMain.YearCheck,
+                    BankDateCheck = samplingworkFTMain.BankDateCheck,
+                    SubCategory = samplingworkFTMain.SubCategory,
+                    Landplot = samplingworkFTMain.Landplot,
+                    RoomPlan = samplingworkFTMain.RoomPlan,
+                    ProjPlan = samplingworkFTMain.ProjPlan,
+                    House_Roomno = samplingworkFTMain.House_Roomno,
+                    Pictures = samplingworkFTMain.Pictures,
+                    OtherDocument = samplingworkFTMain.OtherDocument,
+                    AppraisalBankid = samplingworkFTMain.AppraisalBankid,
+                    AppraisalDate = samplingworkFTMain.AppraisalDate,
+                    ChkReportBankid = samplingworkFTMain.ChkReportBankid,
+                    ChkReportdate = samplingworkFTMain.ChkReportdate,
+                    AssistantAppDirector = samplingworkFTMain.AssistantAppDirector,
+                    AssistDate = samplingworkFTMain.AssistDate,
+                };
+
+                #region :: genPK ::
+                using (SqlConnection sqlConnection = new SqlConnection(EnumMessage.connectionString.connect))
+                {
+                    sqlConnection.Open();
+                    SqlCommand sql = new SqlCommand(" SELECT NEXT VALUE FOR  dbo.RAppraisalInfo_SEQ", sqlConnection);
+
+                    using (SqlDataReader reader = sql.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            insertData.RAppraisalID = reader.GetInt64(0);
+                        }
+                    }
+                    sqlConnection.Close();
+                }
+                #endregion
+
+
+                _context.SamplingworkFTMain.Add(insertData);
                 await _context.SaveChangesAsync();
 
                 return Ok(EnumMessage.StatusMessage.Success.DataSaved);

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CAMSGHB.CAMS.API.Models;
 using CAMSGHB.CAMS.API.Enum;
 using Microsoft.AspNetCore.Cors;
+using System.Data.SqlClient;
 
 namespace CAMSGHB.CAMS.API.Controllers
 {
@@ -145,7 +146,7 @@ namespace CAMSGHB.CAMS.API.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> PostSamplingUFTDetail([FromForm] SamplingUFTDetail samplingUFTDetail)
+        public async Task<IActionResult> PostSamplingUFTDetail([FromForm] SamplingUFTDetailPostModel samplingUFTDetail)
         {
             try
             {
@@ -154,7 +155,38 @@ namespace CAMSGHB.CAMS.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                _context.SamplingUFTDetail.Add(samplingUFTDetail);
+                var insertData = new SamplingUFTDetail()
+                {
+                    RSubAppraisalID = samplingUFTDetail.RSubAppraisalID,
+                    CIFName = samplingUFTDetail.CIFName,
+                    AANo = samplingUFTDetail.AANo,
+                    RoomNo = samplingUFTDetail.RoomNo,
+                    BuildingNo = samplingUFTDetail.BuildingNo,
+                    RegisterNumber = samplingUFTDetail.RegisterNumber,
+                    FloorNoCondo = samplingUFTDetail.FloorNoCondo,
+                    PositionLatitude = samplingUFTDetail.PositionLatitude,
+                    PositionLongtitude = samplingUFTDetail.PositionLongtitude,
+                    chkconstruction = samplingUFTDetail.chkconstruction,
+                };
+
+                #region :: genPK ::
+                using (SqlConnection sqlConnection = new SqlConnection(EnumMessage.connectionString.connect))
+                {
+                    sqlConnection.Open();
+                    SqlCommand sql = new SqlCommand(" SELECT NEXT VALUE FOR  dbo.RAppraisalInfo_SEQ", sqlConnection);
+
+                    using (SqlDataReader reader = sql.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            insertData.RAppraisalID = reader.GetInt64(0);
+                        }
+                    }
+                    sqlConnection.Close();
+                }
+                #endregion
+
+                _context.SamplingUFTDetail.Add(insertData);
                 await _context.SaveChangesAsync();
 
                 return Ok(EnumMessage.StatusMessage.Success.DataSaved);

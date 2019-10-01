@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CAMSGHB.CAMS.API.Models;
 using CAMSGHB.CAMS.API.Enum;
 using Microsoft.AspNetCore.Cors;
+using System.Data.SqlClient;
 
 namespace CAMSGHB.CAMS.API.Controllers
 {
@@ -366,7 +367,7 @@ namespace CAMSGHB.CAMS.API.Controllers
         // POST: api/SamplingworkBZP
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> PostSamplingworkBZP([FromForm] SamplingworkBZPGetModel samplingworkBZP)
+        public async Task<IActionResult> PostSamplingworkBZP([FromForm] SamplingworkBZPPostModel samplingworkBZP)
         {
             try
             {
@@ -378,8 +379,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                 #region :: MapperData ::
                 var getModelToDbModel = new SamplingworkBZP()
                 {
-                      RAppraisalID = samplingworkBZP.RAppraisalID,
-                      AppraisalID = samplingworkBZP.RAppraisalID,
+                      AppraisalID = samplingworkBZP.AppraisalID,
                       RJobType = samplingworkBZP.RJobType,
                       ProjectName = samplingworkBZP.ProjectName,
                       ProjectCode = samplingworkBZP.ProjectCode,
@@ -428,10 +428,27 @@ namespace CAMSGHB.CAMS.API.Controllers
                 };
                 #endregion
 
+                #region :: generate PK ::
+                using (SqlConnection sqlConnection = new SqlConnection(EnumMessage.connectionString.connect))
+                {
+                    sqlConnection.Open();
+                    SqlCommand sql = new SqlCommand(" SELECT NEXT VALUE FOR  dbo.RAppraisalInfo_SEQ", sqlConnection);
+
+                    using (SqlDataReader reader = sql.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            getModelToDbModel.RAppraisalID = reader.GetInt64(0);
+                        }
+                    }
+                    sqlConnection.Close();
+                }
+                #endregion
+
                 _context.SamplingworkBZP.Add(getModelToDbModel);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetSamplingworkBZP", new { id = samplingworkBZP.RAppraisalID }, samplingworkBZP);
+                return CreatedAtAction("GetSamplingworkBZP", new { id = getModelToDbModel.RAppraisalID }, samplingworkBZP);
             }
             catch (Exception ex)
             {

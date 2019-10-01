@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CAMSGHB.CAMS.API.Models;
 using CAMSGHB.CAMS.API.Enum;
 using Microsoft.AspNetCore.Cors;
+using System.Data.SqlClient;
 
 namespace CAMSGHB.CAMS.API.Controllers
 {
@@ -108,7 +109,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                                          select updateData).FirstOrDefault();
                     if (getDataUpdate != null)
                     {
-                        getDataUpdate.RAppraisalID = RAppraisalID;
+                        getDataUpdate.RSubAppraisalID = RSubAppraisalID;
                         getDataUpdate.CIFName = CIFName;
                         getDataUpdate.AANo = AANo;
                         getDataUpdate.ConstDeedNo = ConstDeedNo;
@@ -145,7 +146,7 @@ namespace CAMSGHB.CAMS.API.Controllers
         // POST: api/SamplingLBFTDetails
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> PostSamplingLBFTDetail([FromForm] SamplingLBFTDetail samplingLBFTDetail)
+        public async Task<IActionResult> PostSamplingLBFTDetail([FromForm] SamplingLBFTPostModel samplingLBFTDetail)
         {
             try
             {
@@ -154,7 +155,40 @@ namespace CAMSGHB.CAMS.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                _context.SamplingLBFTDetail.Add(samplingLBFTDetail);
+                var insertData = new SamplingLBFTDetail()
+                {
+                    RSubAppraisalID = samplingLBFTDetail.RSubAppraisalID,
+                    CIFName = samplingLBFTDetail.CIFName,
+                    AANo = samplingLBFTDetail.AANo,
+                    ConstDeedNo = samplingLBFTDetail.ConstDeedNo,
+                    Houseno = samplingLBFTDetail.Houseno,
+                    BuildingModel = samplingLBFTDetail.BuildingModel,
+                    NoOfFloor = samplingLBFTDetail.NoOfFloor.GetValueOrDefault(),
+                    PositionLatitude = samplingLBFTDetail.PositionLatitude,
+                    PositionLongtitude = samplingLBFTDetail.PositionLongtitude,
+                    chkconstruction = samplingLBFTDetail.chkconstruction,
+                };
+
+                #region :: genPK ::
+                using (SqlConnection sqlConnection = new SqlConnection(EnumMessage.connectionString.connect))
+                {
+                    sqlConnection.Open();
+                    SqlCommand sql = new SqlCommand(" SELECT NEXT VALUE FOR  dbo.RAppraisalInfo_SEQ", sqlConnection);
+
+                    using (SqlDataReader reader = sql.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            insertData.RAppraisalID = reader.GetInt64(0);
+                        }
+                    }
+                    sqlConnection.Close();
+                }
+                #endregion
+
+
+
+                _context.SamplingLBFTDetail.Add(insertData);
                 await _context.SaveChangesAsync();
 
                 return Ok(EnumMessage.StatusMessage.Success.DataSaved);
