@@ -1682,6 +1682,10 @@ namespace CAMSGHB.CAMS.API.Models
             modelBuilder.Entity<SamplingProjectView>(entity =>
             {
                 entity.Property(e => e.AppraisalID).HasColumnName("AppraisalID");
+
+                entity.Property(e => e.AANo).HasColumnName("AANo");
+
+                entity.Property(e => e.ProjectCode).HasColumnName("ProjectCode");
             });
         }
     }

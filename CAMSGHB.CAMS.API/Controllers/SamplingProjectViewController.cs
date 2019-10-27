@@ -30,85 +30,59 @@ namespace CAMSGHB.CAMS.API.Controllers
 ;           try
             {
 
-                IQueryable<SamplingProjectView> iQueryData;
+                IQueryable<SamplingProjectView> iQueryData = null ;
+                List<SamplingProjectView> getData = new List<SamplingProjectView>();
 
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
 
-                if(data.percent > 0)
-                {
-                    totalCount = (_context.SamplingProjectView.Count() * data.percent ) / 100 ;
-                    SearchByPercent = (int)Math.Ceiling(totalCount);
-                }
+                var getdata = (from getView in _context.SamplingProjectView
+                               where ((data.AppraisalID == 0) || (getView.AppraisalID == data.AppraisalID))
+                               && (string.IsNullOrEmpty(data.AANo) || (getView.AANo.Trim() == data.AANo.Trim()))
+                               && (string.IsNullOrEmpty(data.ProjectCode) || (getView.ProjectCode.Trim() == data.ProjectCode.Trim()))
+                               && (data.ProjectType == 0 || (getView.ProjectType == data.ProjectType))
+                               && (string.IsNullOrEmpty(data.Description) || (getView.Description.Trim() == data.Description.Trim()))
+                               && (string.IsNullOrEmpty(data.BranchCode) || (getView.BranchCode.Trim() == data.BranchCode.Trim()))
+                               && (string.IsNullOrEmpty(data.Expr1) || (getView.Expr1.Trim() == data.Expr1.Trim()))
+                               && (data.L2VAL == 0 || (getView.L2VAL == data.L2VAL))
+                               && (string.IsNullOrEmpty(data.Project_GroupDetail) || (getView.Project_GroupDetail.Trim() == data.Project_GroupDetail.Trim()))
+                               && (data.L2VALN == 0 || (getView.L2VALN == data.L2VALN))
+                               
+                               select getView).ToList();
 
-                iQueryData = _context.SamplingProjectView;
-
-                if (data.AppraisalID != 0)
-                {
-                    iQueryData = _context.SamplingProjectView.Where(x => x.AppraisalID == data.AppraisalID).AsQueryable();
-                }
-                if (!string.IsNullOrEmpty(data.AANo))
-                {
-                    iQueryData = _context.SamplingProjectView.Where(x => x.AANo.Trim() == data.AANo.Trim()).AsQueryable();
-                }
-                if (!string.IsNullOrEmpty(data.ProjectCode))
-                {
-                    iQueryData = _context.SamplingProjectView.Where(x => x.ProjectCode.Trim() == data.ProjectCode.Trim()).AsQueryable();
-                }
-                if (data.ProjectType != 0)
-                {
-                    iQueryData = _context.SamplingProjectView.Where(x => x.ProjectType == data.ProjectType).AsQueryable();
-                }
-                if (!string.IsNullOrEmpty(data.Description))
-                {
-                    iQueryData = _context.SamplingProjectView.Where(x => x.Description.Trim() == data.Description.Trim()).AsQueryable();
-                }
-                if (!string.IsNullOrEmpty(data.BranchCode))
-                {
-                    iQueryData = _context.SamplingProjectView.Where(x => x.BranchCode.Trim() == data.BranchCode.Trim()).AsQueryable();
-                }
-                if (!string.IsNullOrEmpty(data.Expr1))
-                {
-                    iQueryData = _context.SamplingProjectView.Where(x => x.Expr1 == data.Expr1).AsQueryable();
-                }
-                if (data.L2VAL != 0)
-                {
-                    iQueryData = _context.SamplingProjectView.Where(x => x.L2VAL == data.L2VAL).AsQueryable();
-                }
-                if (!string.IsNullOrEmpty(data.Project_GroupDetail))
-                {
-                    iQueryData = _context.SamplingProjectView.Where(x => x.Project_GroupDetail.Trim() == data.Project_GroupDetail.Trim()).AsQueryable();
-                }
+               
                 if (!string.IsNullOrEmpty(data.ProjectGroupDsb))
                 {
                     if (data.ProjectGroupDsb == "FT")
                     {
-                        iQueryData = _context.SamplingProjectView.Where(x => x.ProjectGroupDsb.Trim() == "FT" || x.ProjectGroupDsb.Trim() == "RFT" || x.ProjectGroupDsb.Trim() == "SFT").AsQueryable();
+                        getData = getdata.Where(x => x.ProjectGroupDsb == "FT" || x.ProjectGroupDsb == "RFT" || x.ProjectGroupDsb == "SFT").ToList();
                     }
                     if (data.ProjectGroupDsb == "BZP")
                     {
-                        iQueryData = _context.SamplingProjectView.Where(x => x.ProjectGroupDsb.Trim() == "BZP").AsQueryable();
+                        getData = getdata.Where(x => x.ProjectGroupDsb == "BZP").ToList();
                     }
                     if (data.ProjectGroupDsb == "LTF")
                     {
-                        iQueryData = _context.SamplingProjectView.Where(x => x.ProjectGroupDsb.Trim() == "LTF").AsQueryable();
+                        getData = getdata.Where(x => x.ProjectGroupDsb == "LTF").ToList();
                     }
                 }
+                //iQueryData = getData.as;
 
-                if (data.L2VALN != 0)
+
+                if (data.percent > 0)
                 {
-                    iQueryData = _context.SamplingProjectView.Where(x => x.L2VALN == data.L2VALN).AsQueryable();
+                    totalCount = (getData.Count() * data.percent) / 100;
+                    SearchByPercent = (int)Math.Ceiling(totalCount);
+                    iQueryData = getData.Take(SearchByPercent).AsQueryable();
+                }
+                else
+                {
+                    iQueryData = getdata.AsQueryable();
                 }
 
-
-                if (SearchByPercent > 0)
-                {
-                    iQueryData = iQueryData.Take(SearchByPercent);
-                }
-
-                return Ok(iQueryData);
+                return Ok(iQueryData.ToList());
             }
             catch (Exception ex)
             {
