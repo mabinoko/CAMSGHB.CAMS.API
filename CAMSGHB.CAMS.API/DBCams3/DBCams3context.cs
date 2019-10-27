@@ -82,6 +82,7 @@ namespace CAMSGHB.CAMS.API.Models
         public virtual DbSet<SamplingworkFTMain> SamplingworkFTMain { get; set; }
         public virtual DbSet<SamplingworkLTF> SamplingworkLTF { get; set; }
         public virtual DbSet<RAppraisalInfo> RAppraisalInfo { get; set; }
+        public virtual DbSet<SamplingProjectView> SamplingProjectView { get; set; }
 
         // Unable to generate entity type for table 'dbo.SamplingworkBZP'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.SamplingworkLTF'. Please see the warning messages.
@@ -1676,6 +1677,11 @@ namespace CAMSGHB.CAMS.API.Models
                 entity.Property(e => e.UseTypeId).HasColumnName("UseTypeID");
 
                 entity.Property(e => e.UseName).HasMaxLength(150);
+            });
+
+            modelBuilder.Entity<SamplingProjectView>(entity =>
+            {
+                entity.Property(e => e.AppraisalID).HasColumnName("AppraisalID");
             });
         }
     }
