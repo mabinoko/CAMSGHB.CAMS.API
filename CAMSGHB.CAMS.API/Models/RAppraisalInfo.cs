@@ -289,6 +289,9 @@ namespace CAMSGHB.CAMS.API.Models
           [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AppDireDate { get; set; }
 
+        [Range(typeof(int), "0", "100")]
+        public int percent { get; set; }
+
     }
 
     public class RAppraisalInfoPostMode

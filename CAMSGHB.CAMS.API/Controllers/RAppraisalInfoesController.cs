@@ -28,7 +28,7 @@ namespace CAMSGHB.CAMS.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRAppraisalInfo([FromQuery]RAppraisalInfoGetModel data)
         {
-            
+            decimal totalCount = 0;
             try
             {
                 IQueryable<RAppraisalInfo> iQueryData;
@@ -36,7 +36,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                //var test = _context.RAppraisalInfo.Select(x=> x.RAppraisalID).ToList();
+                
                 #region :: Query ::
                 iQueryData = _context.RAppraisalInfo;
                 if (data.RAppraisalID != 0)
@@ -345,7 +345,15 @@ namespace CAMSGHB.CAMS.API.Controllers
                     iQueryData = _context.RAppraisalInfo.Where(x => x.AppDireDate == data.AppDireDate).AsQueryable();
                 }
                 #endregion
-                //var getdata = iQueryData.ToList();
+                
+                if(data.percent > 0)
+                {
+                    
+                    totalCount = (decimal)((iQueryData.ToList().Count() * data.percent) / 100.00) ;
+                    var queryRow = (int)Math.Ceiling(totalCount);
+                    return Ok(iQueryData.ToList().Take(queryRow));
+                }
+
                 return Ok(iQueryData);
             }
             catch (Exception ex)

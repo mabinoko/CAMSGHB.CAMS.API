@@ -73,7 +73,7 @@ namespace CAMSGHB.CAMS.API.Controllers
 
                 if (data.percent > 0)
                 {
-                    totalCount = (getData.Count() * data.percent) / 100;
+                    totalCount = (decimal)((getData.Count() * data.percent) / 100.00);
                     SearchByPercent = (int)Math.Ceiling(totalCount);
                     iQueryData = getData.Take(SearchByPercent).AsQueryable();
                 }
