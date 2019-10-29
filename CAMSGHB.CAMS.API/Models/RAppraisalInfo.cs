@@ -159,12 +159,18 @@ namespace CAMSGHB.CAMS.API.Models
         public long AppraisalID { get; set; }
         [DataType(DataType.Date)]
         //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
-          [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? DateCompCheck { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? DateCompCheckStartDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? DateCompCheckEndDate { get; set; }
         [DataType(DataType.Date)]
         //[JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
-          [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? BankDateCheck { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? BankDateCheckStartDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? BankDateCheckEndDate { get; set; }
         [StringLength(120)]
         public string CIFName { get; set; }
         public int MonthCheck { get; set; }

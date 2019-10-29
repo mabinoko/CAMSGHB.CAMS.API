@@ -47,13 +47,13 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     iQueryData = _context.RAppraisalInfo.Where(x => x.AppraisalID == data.AppraisalID).AsQueryable();
                 }
-                if (data.DateCompCheck != null)
+                if (data.DateCompCheckStartDate != null && data.DateCompCheckEndDate != null)
                 {
-                    iQueryData = _context.RAppraisalInfo.Where(x => x.DateCompCheck == data.DateCompCheck).AsQueryable();
+                    iQueryData = _context.RAppraisalInfo.Where(x => x.DateCompCheck >= data.DateCompCheckStartDate && x.DateCompCheck <= data.DateCompCheckEndDate).AsQueryable();
                 }
-                if (data.BankDateCheck != null)
+                if (data.BankDateCheckStartDate != null && data.BankDateCheckEndDate != null)
                 {
-                    iQueryData = _context.RAppraisalInfo.Where(x => x.BankDateCheck == data.BankDateCheck).AsQueryable();
+                    iQueryData = _context.RAppraisalInfo.Where(x => x.BankDateCheck >= data.BankDateCheckStartDate && x.BankDateCheck <= data.BankDateCheckEndDate).AsQueryable();
                 }
                 if (!string.IsNullOrEmpty(data.CIFName))
                 {
@@ -348,7 +348,6 @@ namespace CAMSGHB.CAMS.API.Controllers
                 
                 if(data.percent > 0)
                 {
-                    
                     totalCount = (decimal)((iQueryData.ToList().Count() * data.percent) / 100.00) ;
                     var queryRow = (int)Math.Ceiling(totalCount);
                     return Ok(iQueryData.ToList().Take(queryRow));
