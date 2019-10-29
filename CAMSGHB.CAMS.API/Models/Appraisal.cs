@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using static CAMSGHB.CAMS.API.Enum.EnumMessage;
 
 namespace CAMSGHB.CAMS.API.Models
 {
@@ -95,5 +99,64 @@ namespace CAMSGHB.CAMS.API.Models
         public ICollection<FacilityList> FacilityList { get; set; }
         public ICollection<FileImg> FileImg { get; set; }
         public ICollection<SignName> SignName { get; set; }
+    }
+
+    public partial class AppraisalGetModel
+    {
+        public long AppraisalId { get; set; }
+        public string AANo {get; set;}
+        public string FirstName {get; set;}
+        public string LastName {get; set;}
+        public string ApprComp {get; set;}
+        public string AccountNo {get; set;}
+        public string Appraisal_JobType {get; set;}
+        public string COLL_TYPE_CODE {get; set;}
+        [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? ReqDateStartDate {get; set;}
+        [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? ReqDateEndDate { get; set; }
+        [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? DateSurveyStartDate {get; set;}
+        [DataType(DataType.Date)]
+        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? DateSurveyEndDate { get; set; }
+        public int CurrentPage { get; set; }
+
+        [Range(typeof(int), "0", "100")]
+        public int percent { get; set; }
+    }
+
+    public partial class AppraisalDisplay
+    {
+        public long AppraisalId { get; set; }
+        public string AANo { get; set; }
+        public string ApprComp { get; set; }
+        public string ApprCompBranch { get; set; }
+        public string AccountNo { get; set; }
+        public string Appraisal_JobTypeName { get; set; }
+        public string Appraisal_JobType { get; set; }
+        public DateTime? ReqDate { get; set; }
+        public string CIFName { get; set; }
+        public string COLL_TYPE_CODE { get; set; }
+        public string CompanyName { get; set; }
+        public string BranchName { get; set; }
+        public string BrCode { get; set; }
+        public DateTime? DateSurvey { get; set; }
+        public int? AssessmentIn { get; set; }
+        public int? SeniorIn { get; set; }
+        public int? LeadIn { get; set; }
+        public int? GuaranTee1 { get; set; }
+        public int? GuaranTee2 { get; set; }
+        public int? GuaranTee3 { get; set; }
+        public string ProgressDesc { get; set; }
+        public string ProgressStatus { get; set; }
+        public int? SurveyEx { get; set; }
     }
 }
