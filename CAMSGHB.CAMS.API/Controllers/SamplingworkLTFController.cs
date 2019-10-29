@@ -18,7 +18,7 @@ namespace CAMSGHB.CAMS.API.Controllers
     public class SamplingworkLTFController : ControllerBase
     {
         private readonly DBCams3context _context;
-       
+
         public SamplingworkLTFController(DBCams3context context)
         {
             _context = context;
@@ -28,8 +28,7 @@ namespace CAMSGHB.CAMS.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSamplingworkLTF([FromQuery] SamplingworkLTFGetModel data)
         {
-            decimal totalCount;
-            int SearchByPercent = 0;
+            decimal totalCount = 0;
             try
             {
                 if (!ModelState.IsValid)
@@ -38,69 +37,243 @@ namespace CAMSGHB.CAMS.API.Controllers
                 }
 
                 IQueryable<SamplingworkLTF> iQueryData;
-                List<SamplingworkLTF> getData = new List<SamplingworkLTF>();
 
-                var getdata = (from getView in _context.SamplingworkLTF
-                               where ((data.RAppraisalID == 0) || (getView.RAppraisalID == data.RAppraisalID)) 
-                               && ((data.AppraisalID == 0) || (getView.AppraisalID == data.AppraisalID))
-                               && (string.IsNullOrEmpty(data.ProjectName) || (getView.ProjectName.Trim() == data.ProjectName.Trim()))
-                               && (string.IsNullOrEmpty(data.ProjectCode) || (getView.ProjectCode.Trim() == data.ProjectCode.Trim())) 
-                               && (string.IsNullOrEmpty(data.CIFName) || (getView.CIFName.Trim() == data.CIFName.Trim()))
-                               && (string.IsNullOrEmpty(data.APNO) || (getView.APNO.Trim() == data.APNO.Trim()))
-                               && (string.IsNullOrEmpty(data.ConstDeedNo) || (getView.ConstDeedNo.Trim() == data.ConstDeedNo.Trim()))
-                               && (string.IsNullOrEmpty(data.LandNo) || (getView.LandNo.Trim() == data.LandNo.Trim()))
-                               && (string.IsNullOrEmpty(data.SubCategory) || (getView.SubCategory.Trim() == data.SubCategory.Trim()))
-                               && (string.IsNullOrEmpty(data.SplitEntry) || (getView.SplitEntry.Trim() == data.SplitEntry.Trim()))
-                               && (string.IsNullOrEmpty(data.Street) || (getView.Street.Trim() == data.Street.Trim()))
-                               && (string.IsNullOrEmpty(data.SubDistrict) || (getView.SubDistrict.Trim() == data.SubDistrict.Trim()))
-                               && (string.IsNullOrEmpty(data.District) || (getView.District.Trim() == data.District.Trim()))
-                               && (string.IsNullOrEmpty(data.Province) || (getView.Province.Trim() == data.Province.Trim()))
-                               && (string.IsNullOrEmpty(data.AssessCompany) || (getView.AssessCompany.Trim() == data.AssessCompany.Trim()))
-                               && ((data.MonthCheck == 0) || (getView.MonthCheck == data.MonthCheck))
-                               && ((data.StratDateSurvey != null && data.EndDateSurvey != null) || (getView.LastDateSurvey >= data.StratDateSurvey && getView.LastDateSurvey <= data.EndDateSurvey))
-                               && ((data.StratBankDateCheck != null && data.EndBankDateCheck != null) || (getView.BankDateCheck >= data.StratBankDateCheck && getView.BankDateCheck <= data.EndBankDateCheck))
-                               && ((data.checkdevland != null) || (getView.checkdevland == data.checkdevland))
-                               && ((data.chkpublicutility != null) || (getView.chkpublicutility == data.chkpublicutility))
-                               && ((data.chkconstruction != null) || (getView.chkconstruction == data.chkconstruction))
-                               && ((data.chkfacility != null) || (getView.chkfacility == data.chkfacility))
-                               && ((data.chklandlocation != null) || (getView.chklandlocation == data.chklandlocation))
-                               && ((data.surveybanklist != null) || (getView.surveybanklist == data.surveybanklist))
-                               && ((data.appraisalbanklist != null) || (getView.appraisalbanklist == data.appraisalbanklist))
-                               && ((data.Ownerbanklist != null) || (getView.Ownerbanklist == data.Ownerbanklist))
-                               && ((data.Otherdetail != null) || (getView.Otherdetail == data.Otherdetail))
-                               && (string.IsNullOrEmpty(data.Remark) || (getView.Remark.Trim() == data.Remark.Trim()))
-                               && (string.IsNullOrEmpty(data.Buildingplan) || (getView.Buildingplan.Trim() == data.Buildingplan.Trim()))
-                               && (string.IsNullOrEmpty(data.Other) || (getView.Other.Trim() == data.Other.Trim()))
-                               && ((data.Appraisalchk != null) || (getView.Appraisalchk == data.Appraisalchk))
-                               && (string.IsNullOrEmpty(data.CommentDetail) || (getView.CommentDetail.Trim() == data.CommentDetail.Trim()))
-                               && (string.IsNullOrEmpty(data.AppraisalBankid) || (getView.AppraisalBankid.Trim() == data.AppraisalBankid.Trim()))
-                               && ((data.AppraisalDate != null) || (getView.AppraisalDate == data.AppraisalDate))
-                               && ((data.chkmistake != null) || (getView.chkmistake == data.chkmistake))
-                               && (string.IsNullOrEmpty(data.mistakedetail) || (getView.mistakedetail.Trim() == data.mistakedetail.Trim()))
-                               && ((data.warningletter != null) || (getView.warningletter == data.warningletter))
-                               && (string.IsNullOrEmpty(data.warningdetail) || (getView.warningdetail.Trim() == data.warningdetail.Trim()))
-                               && (string.IsNullOrEmpty(data.Headteam) || (getView.Headteam.Trim() == data.Headteam.Trim()))
-                               && ((data.datecheck != null) || (getView.datecheck == data.datecheck))
-                               && (string.IsNullOrEmpty(data.AssistantAppDirector) || (getView.AssistantAppDirector.Trim() == data.AssistantAppDirector.Trim()))
-                               && ((data.AssistDate != null) || (getView.AssistDate == data.AssistDate))
-                               && (string.IsNullOrEmpty(data.AppDirector) || (getView.AppDirector.Trim() == data.AppDirector.Trim()))
-                               && ((data.AppDireDate != null) || (getView.AppDireDate == data.AppDireDate))
-                               select getView
-                               ).ToList();
+                #region :: Query ::
+                iQueryData = _context.SamplingworkLTF;
 
+                if (data.RAppraisalID != 0)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.RAppraisalID == data.RAppraisalID).AsQueryable();
+                }
+
+                if (data.AppraisalID != 0)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.AppraisalID == data.AppraisalID).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.ProjectName))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.ProjectName == data.ProjectName).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.ProjectCode))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.ProjectCode == data.ProjectCode).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.CIFName))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.CIFName == data.CIFName).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.AANo))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.AANo == data.AANo).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.APNO))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.APNO == data.APNO).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.ConstDeedNo))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.ConstDeedNo == data.ConstDeedNo).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.LandNo))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.LandNo == data.LandNo).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.SubCategory))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.SubCategory == data.SubCategory).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.SplitEntry))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.SplitEntry == data.SplitEntry).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.Street))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.Street == data.Street).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.SubDistrict))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.SubDistrict == data.SubDistrict).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.District))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.District == data.District).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.Province))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.Province == data.Province).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.AssessCompany))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.AssessCompany == data.AssessCompany).AsQueryable();
+                }
+
+                if (data.MonthCheck != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.MonthCheck == data.MonthCheck).AsQueryable();
+                }
+
+                if (data.StratDateSurvey != null && data.EndDateSurvey != null)//
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.LastDateSurvey >= data.StratDateSurvey && x.LastDateSurvey <= data.EndDateSurvey).AsQueryable();
+                }
+
+                if (data.StratBankDateCheck != null && data.EndBankDateCheck != null)//
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.LastDateSurvey >= data.StratBankDateCheck && x.LastDateSurvey <= data.EndBankDateCheck).AsQueryable();
+                }
+
+                if (data.checkdevland != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.checkdevland == data.checkdevland).AsQueryable();
+                }
+
+                if (data.chkpublicutility != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.chkpublicutility == data.chkpublicutility).AsQueryable();
+                }
+
+                if (data.chkconstruction != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.chkconstruction == data.chkconstruction).AsQueryable();
+                }
+
+                if (data.chkfacility != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.chkfacility == data.chkfacility).AsQueryable();
+                }
+
+                if (data.chklandlocation != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.chklandlocation == data.chklandlocation).AsQueryable();
+                }
+
+                if (data.surveybanklist != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.surveybanklist == data.surveybanklist).AsQueryable();
+                }
+
+                if (data.appraisalbanklist != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.appraisalbanklist == data.appraisalbanklist).AsQueryable();
+                }
+
+                if (data.Ownerbanklist != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.Ownerbanklist == data.Ownerbanklist).AsQueryable();
+                }
+
+                if (data.Otherdetail != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.Otherdetail == data.Otherdetail).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.Remark))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.Remark == data.Remark).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.Buildingplan))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.Buildingplan == data.Buildingplan).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.Other))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.Other == data.Other).AsQueryable();
+                }
+
+                if (data.Appraisalchk != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.Appraisalchk == data.Appraisalchk).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.CommentDetail))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.CommentDetail == data.CommentDetail).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.AppraisalBankid))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.AppraisalBankid == data.AppraisalBankid).AsQueryable();
+                }
+
+                if (data.AppraisalDate != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.AppraisalDate == data.AppraisalDate).AsQueryable();
+                }
+
+                if (data.chkmistake != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.chkmistake == data.chkmistake).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.mistakedetail))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.mistakedetail == data.mistakedetail).AsQueryable();
+                }
+
+                if (data.warningletter != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.warningletter == data.warningletter).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.warningdetail))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.warningdetail == data.warningdetail).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.Headteam))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.Headteam == data.Headteam).AsQueryable();
+                }
+
+                if (data.datecheck != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.datecheck == data.datecheck).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.AssistantAppDirector))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.AssistantAppDirector == data.AssistantAppDirector).AsQueryable();
+                }
+
+                if (data.AssistDate != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.AssistDate == data.AssistDate).AsQueryable();
+                }
+
+                if (!string.IsNullOrEmpty(data.AppDirector))
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.AppDirector == data.AppDirector).AsQueryable();
+                }
+
+                if (data.AppDireDate != null)
+                {
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.AppDireDate == data.AppDireDate).AsQueryable();
+                }
+                #endregion
                 if (data.percent > 0)
                 {
-                    totalCount = (decimal)((getData.Count() * data.percent) / 100.00);
-                    SearchByPercent = (int)Math.Ceiling(totalCount);
-                    iQueryData = getData.Take(SearchByPercent).AsQueryable();
-                }
-                else
-                {
-                    iQueryData = getdata.AsQueryable();
+                    totalCount = (decimal)((iQueryData.ToList().Count() * data.percent) / 100.00);
+                    var queryRow = (int)Math.Ceiling(totalCount);
+                    return Ok(iQueryData.ToList().Take(queryRow));
                 }
 
-                return Ok(iQueryData.ToList());
-
+                return Ok(iQueryData);
             }
             catch (Exception ex)
             {
@@ -119,7 +292,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-              
+
 
                 var updateData = _context.SamplingworkLTF.Where(x => x.RAppraisalID == samplingworkLTF.RAppraisalID).FirstOrDefault();
                 if (updateData == null)
