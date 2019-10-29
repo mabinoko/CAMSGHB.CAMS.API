@@ -225,6 +225,26 @@ namespace CAMSGHB.CAMS.API.Models
 
         [StringLength(255)]
         public string reportdetail { get; set; }
+
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? StratBankDateCheck { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? EndBankDateCheck { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? StratLastDateSurvey { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? EndLastDateSurvey { get; set; }
+
+        [Range(typeof(int), "0", "100")]
+        public int percent { get; set; }
     }
 
     public class SamplingworkBZPPostModel

@@ -27,6 +27,7 @@ namespace CAMSGHB.CAMS.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSamplingworkBZP([FromQuery] SamplingworkBZPGetModel data)
         {
+            decimal totalCount = 0;
             try
             {
                 if (!ModelState.IsValid)
@@ -129,14 +130,14 @@ namespace CAMSGHB.CAMS.API.Controllers
                     iQueryData = _context.SamplingworkBZP.Where(x => x.MonthCheck == data.MonthCheck).AsQueryable();
                 }
 
-                if (data.LastDateSurvey != null)
+                if (data.StratLastDateSurvey != null && data.EndLastDateSurvey != null)
                 {
-                    iQueryData = _context.SamplingworkBZP.Where(x => x.LastDateSurvey == data.LastDateSurvey).AsQueryable();
+                    iQueryData = _context.SamplingworkBZP.Where(x => x.LastDateSurvey >= data.StratLastDateSurvey && x.LastDateSurvey <= data.EndLastDateSurvey).AsQueryable();
                 }
 
-                if (data.BankDateCheck != null)
+                if (data.StratBankDateCheck != null && data.EndBankDateCheck != null)
                 {
-                    iQueryData = _context.SamplingworkBZP.Where(x => x.BankDateCheck == data.BankDateCheck).AsQueryable();
+                    iQueryData = _context.SamplingworkBZP.Where(x => x.BankDateCheck >= data.StratBankDateCheck && x.BankDateCheck <= data.EndBankDateCheck).AsQueryable();
                 }
 
                 if (data.checkdevland != null)
@@ -279,6 +280,12 @@ namespace CAMSGHB.CAMS.API.Controllers
                     iQueryData = _context.SamplingworkBZP.Where(x => x.AppDireDate == data.AppDireDate).AsQueryable();
                 }
                 #endregion
+                if (data.percent > 0)
+                {
+                    totalCount = (decimal)((iQueryData.ToList().Count() * data.percent) / 100.00);
+                    var queryRow = (int)Math.Ceiling(totalCount);
+                    return Ok(iQueryData.ToList().Take(queryRow));
+                }
 
                 return Ok(iQueryData);
             }
