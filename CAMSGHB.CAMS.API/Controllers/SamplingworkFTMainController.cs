@@ -28,6 +28,7 @@ namespace CAMSGHB.CAMS.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSamplingworkFTMain([FromQuery] SamplingworkFTMainGetModel data)
         {
+            decimal totalCount = 0;
             try
             {
                 if (!ModelState.IsValid)
@@ -124,9 +125,9 @@ namespace CAMSGHB.CAMS.API.Controllers
                     iQueryData = _context.SamplingworkFTMain.Where(x => x.AppraisalBankid == data.AppraisalBankid).AsQueryable();
                 }
 
-                if (data.AppraisalDate != null)
+                if (data.StratAppraisalDate != null && data.EndAppraisalDate != null)
                 {
-                    iQueryData = _context.SamplingworkFTMain.Where(x => x.AppraisalDate == data.AppraisalDate).AsQueryable();
+                    iQueryData = _context.SamplingworkFTMain.Where(x => x.AppraisalDate >= data.StratAppraisalDate && x.AppraisalDate <= data.EndAppraisalDate).AsQueryable();
                 }
 
                 if (!string.IsNullOrEmpty(data.ChkReportBankid))
@@ -149,6 +150,12 @@ namespace CAMSGHB.CAMS.API.Controllers
                     iQueryData = _context.SamplingworkFTMain.Where(x => x.AssistDate == data.AssistDate).AsQueryable();
                 }
                 #endregion
+                if (data.percent > 0)
+                {
+                    totalCount = (decimal)((iQueryData.ToList().Count() * data.percent) / 100.00);
+                    var queryRow = (int)Math.Ceiling(totalCount);
+                    return Ok(iQueryData.ToList().Take(queryRow));
+                }
 
                 return Ok(iQueryData);
 

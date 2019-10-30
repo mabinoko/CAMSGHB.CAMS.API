@@ -18,7 +18,7 @@ namespace CAMSGHB.CAMS.API.Controllers
     public class SamplingworkLTFController : ControllerBase
     {
         private readonly DBCams3context _context;
-       
+
         public SamplingworkLTFController(DBCams3context context)
         {
             _context = context;
@@ -28,6 +28,7 @@ namespace CAMSGHB.CAMS.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSamplingworkLTF([FromQuery] SamplingworkLTFGetModel data)
         {
+            decimal totalCount = 0;
             try
             {
                 if (!ModelState.IsValid)
@@ -120,24 +121,19 @@ namespace CAMSGHB.CAMS.API.Controllers
                     iQueryData = _context.SamplingworkLTF.Where(x => x.AssessCompany == data.AssessCompany).AsQueryable();
                 }
 
-                if (!string.IsNullOrEmpty(data.AssessCompany))
-                {
-                    iQueryData = _context.SamplingworkLTF.Where(x => x.AssessCompany == data.AssessCompany).AsQueryable();
-                }
-
                 if (data.MonthCheck != null)
                 {
                     iQueryData = _context.SamplingworkLTF.Where(x => x.MonthCheck == data.MonthCheck).AsQueryable();
                 }
 
-                if (data.LastDateSurvey != null)
+                if (data.StratDateSurvey != null && data.EndDateSurvey != null)//
                 {
-                    iQueryData = _context.SamplingworkLTF.Where(x => x.LastDateSurvey == data.LastDateSurvey).AsQueryable();
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.LastDateSurvey >= data.StratDateSurvey && x.LastDateSurvey <= data.EndDateSurvey).AsQueryable();
                 }
 
-                if (data.BankDateCheck != null)
+                if (data.StratBankDateCheck != null && data.EndBankDateCheck != null)//
                 {
-                    iQueryData = _context.SamplingworkLTF.Where(x => x.BankDateCheck == data.BankDateCheck).AsQueryable();
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.LastDateSurvey >= data.StratBankDateCheck && x.LastDateSurvey <= data.EndBankDateCheck).AsQueryable();
                 }
 
                 if (data.checkdevland != null)
@@ -190,19 +186,9 @@ namespace CAMSGHB.CAMS.API.Controllers
                     iQueryData = _context.SamplingworkLTF.Where(x => x.Remark == data.Remark).AsQueryable();
                 }
 
-                if (!string.IsNullOrEmpty(data.Remark))
-                {
-                    iQueryData = _context.SamplingworkLTF.Where(x => x.Remark == data.Remark).AsQueryable();
-                }
-
                 if (!string.IsNullOrEmpty(data.Buildingplan))
                 {
                     iQueryData = _context.SamplingworkLTF.Where(x => x.Buildingplan == data.Buildingplan).AsQueryable();
-                }
-
-                if (!string.IsNullOrEmpty(data.Other))
-                {
-                    iQueryData = _context.SamplingworkLTF.Where(x => x.Other == data.Other).AsQueryable();
                 }
 
                 if (!string.IsNullOrEmpty(data.Other))
@@ -280,6 +266,12 @@ namespace CAMSGHB.CAMS.API.Controllers
                     iQueryData = _context.SamplingworkLTF.Where(x => x.AppDireDate == data.AppDireDate).AsQueryable();
                 }
                 #endregion
+                if (data.percent > 0)
+                {
+                    totalCount = (decimal)((iQueryData.ToList().Count() * data.percent) / 100.00);
+                    var queryRow = (int)Math.Ceiling(totalCount);
+                    return Ok(iQueryData.ToList().Take(queryRow));
+                }
 
                 return Ok(iQueryData);
             }
@@ -300,7 +292,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-              
+
 
                 var updateData = _context.SamplingworkLTF.Where(x => x.RAppraisalID == samplingworkLTF.RAppraisalID).FirstOrDefault();
                 if (updateData == null)

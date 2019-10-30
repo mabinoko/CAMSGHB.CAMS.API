@@ -101,6 +101,18 @@ namespace CAMSGHB.CAMS.API.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AssistDate { get; set; }
+
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? StratAppraisalDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? EndAppraisalDate { get; set; }
+
+        [Range(typeof(int), "0", "100")]
+        public int percent { get; set; }
     }
 
     public class SamplingworkFTMainPOstModel
