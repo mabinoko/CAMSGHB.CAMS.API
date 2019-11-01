@@ -133,7 +133,7 @@ namespace CAMSGHB.CAMS.API.Controllers
 
                 if (data.StratBankDateCheck != null && data.EndBankDateCheck != null)//
                 {
-                    iQueryData = _context.SamplingworkLTF.Where(x => x.LastDateSurvey >= data.StratBankDateCheck && x.LastDateSurvey <= data.EndBankDateCheck).AsQueryable();
+                    iQueryData = _context.SamplingworkLTF.Where(x => x.BankDateCheck >= data.StratBankDateCheck && x.BankDateCheck <= data.EndBankDateCheck).AsQueryable();
                 }
 
                 if (data.checkdevland != null)

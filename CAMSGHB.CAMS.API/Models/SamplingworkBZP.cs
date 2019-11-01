@@ -50,13 +50,13 @@ namespace CAMSGHB.CAMS.API.Models
         public int? MonthCheck {get; set;}
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? LastDateSurvey {get; set;}
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? BankDateCheck {get; set;}
 
         public bool? checkdevland {get; set;}
@@ -158,13 +158,13 @@ namespace CAMSGHB.CAMS.API.Models
         public int? MonthCheck { get; set; }
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? LastDateSurvey { get; set; }
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? BankDateCheck { get; set; }
 
         public bool? checkdevland { get; set; }
@@ -228,19 +228,19 @@ namespace CAMSGHB.CAMS.API.Models
 
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? StratBankDateCheck { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? EndBankDateCheck { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? StratLastDateSurvey { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? EndLastDateSurvey { get; set; }
 
         [Range(typeof(int), "0", "100")]
@@ -283,13 +283,13 @@ namespace CAMSGHB.CAMS.API.Models
         public int? MonthCheck { get; set; }
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? LastDateSurvey { get; set; }
 
         [DataType(DataType.Date)]
-        [JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? BankDateCheck { get; set; }
 
         public bool? checkdevland { get; set; }
