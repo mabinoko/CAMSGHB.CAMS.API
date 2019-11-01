@@ -38,7 +38,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var getdata = (from getView in _context.SamplingProjectView
+                    getData = (from getView in _context.SamplingProjectView
                                where ((data.AppraisalID == 0) || (getView.AppraisalID == data.AppraisalID))
                                && (string.IsNullOrEmpty(data.AANo) || (getView.AANo.Trim() == data.AANo.Trim()))
                                && (string.IsNullOrEmpty(data.ProjectCode) || (getView.ProjectCode.Trim() == data.ProjectCode.Trim()))
@@ -57,19 +57,17 @@ namespace CAMSGHB.CAMS.API.Controllers
                 {
                     if (data.ProjectGroupDsb == "FT")
                     {
-                        getData = getdata.Where(x => x.ProjectGroupDsb == "FT" || x.ProjectGroupDsb == "RFT" || x.ProjectGroupDsb == "SFT").ToList();
+                        getData = getData.Where(x => x.ProjectGroupDsb == "FT" || x.ProjectGroupDsb == "RFT" || x.ProjectGroupDsb == "SFT").ToList();
                     }
                     if (data.ProjectGroupDsb == "BZP")
                     {
-                        getData = getdata.Where(x => x.ProjectGroupDsb == "BZP").ToList();
+                        getData = getData.Where(x => x.ProjectGroupDsb == "BZP").ToList();
                     }
                     if (data.ProjectGroupDsb == "LTF")
                     {
-                        getData = getdata.Where(x => x.ProjectGroupDsb == "LTF").ToList();
+                        getData = getData.Where(x => x.ProjectGroupDsb == "LTF").ToList();
                     }
                 }
-                //iQueryData = getData.as;
-
 
                 if (data.percent > 0)
                 {
@@ -79,7 +77,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                 }
                 else
                 {
-                    iQueryData = getdata.AsQueryable();
+                    iQueryData = getData.AsQueryable();
                 }
 
                 return Ok(iQueryData.ToList());
