@@ -97,7 +97,8 @@ namespace CAMSGHB.CAMS.API.Models
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 //optionsBuilder.UseSqlServer("Server=207.148.69.13;Database=DBCams3;User ID=os1;Password=os1");
-                optionsBuilder.UseSqlServer("Server=35.200.48.34;Database=DBCams3;User ID=sa;Password=X*CGNu2ranuy");
+                //Server=35.189.173.218;Database=dbCams;User ID=sa;Password=g5pH25k2Q.fa
+                //optionsBuilder.UseSqlServer("Server=35.189.173.218;Database=dbCams;User ID=sa;Password=g5pH25k2Q.fa");
             }
         }
 
