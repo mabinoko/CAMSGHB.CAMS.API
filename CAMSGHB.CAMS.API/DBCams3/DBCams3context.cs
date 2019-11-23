@@ -83,6 +83,7 @@ namespace CAMSGHB.CAMS.API.Models
         public virtual DbSet<SamplingworkLTF> SamplingworkLTF { get; set; }
         public virtual DbSet<RAppraisalInfo> RAppraisalInfo { get; set; }
         public virtual DbSet<SamplingProjectView> SamplingProjectView { get; set; }
+        public virtual DbSet<SamplingProjectViewBZP> SamplingProjectViewBZP { get; set; }
 
         // Unable to generate entity type for table 'dbo.SamplingworkBZP'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.SamplingworkLTF'. Please see the warning messages.
@@ -1682,6 +1683,15 @@ namespace CAMSGHB.CAMS.API.Models
             });
 
             modelBuilder.Entity<SamplingProjectView>(entity =>
+            {
+                entity.Property(e => e.AppraisalID).HasColumnName("AppraisalID");
+
+                entity.Property(e => e.AANo).HasColumnName("AANo");
+
+                entity.Property(e => e.ProjectCode).HasColumnName("ProjectCode");
+            });
+
+            modelBuilder.Entity<SamplingProjectViewBZP>(entity =>
             {
                 entity.Property(e => e.AppraisalID).HasColumnName("AppraisalID");
 
