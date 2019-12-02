@@ -25,7 +25,7 @@ namespace CAMSGHB.CAMS.API.Controllers
 
         [HttpGet]
         [Route("api/[action]")]
-        public async Task<IActionResult> GetSamplingProjectView([FromQuery]GetSamplingProjectViewModel data)
+        public async Task<IActionResult> SamplingProjectView([FromQuery]GetSamplingProjectViewModel data)
         {
             decimal totalCount;
             int SearchByPercent = 0;
@@ -92,7 +92,7 @@ namespace CAMSGHB.CAMS.API.Controllers
 
         [HttpGet]
         [Route("api/[action]")]
-        public async Task<IActionResult> GetSamplingProjectViewBZP([FromQuery]GetSamplingProjectViewModel data)
+        public async Task<IActionResult> SamplingProjectViewBZP([FromQuery]GetSamplingProjectViewModel data)
         {
             decimal totalCount;
             int SearchByPercent = 0;
