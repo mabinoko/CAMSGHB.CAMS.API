@@ -28,7 +28,7 @@ namespace CAMSGHB.CAMS.API.Enum
 
         public class connectionString
         {
-            public const string connect = "Server=207.148.69.13;Database=DBCams3;User ID=os1;Password=os1";
+            public const string connect = "Server=207.148.69.13;Database=CAMS-TEST2;User ID=os1;Password=os1";
         }
 
 

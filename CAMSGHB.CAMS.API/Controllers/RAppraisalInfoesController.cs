@@ -578,7 +578,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var rAppraisalInfo = await _context.RAppraisalInfo.FindAsync(RAppraisalID);
+            var rAppraisalInfo = await _context.RAppraisalInfo.Where(x=> x.RAppraisalID == RAppraisalID).FirstOrDefaultAsync();
             if (rAppraisalInfo == null)
             {
                 return NotFound();

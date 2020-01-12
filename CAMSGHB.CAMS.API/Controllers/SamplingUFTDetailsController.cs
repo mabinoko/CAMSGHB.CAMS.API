@@ -206,7 +206,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var samplingUFTDetail = await _context.SamplingUFTDetail.FindAsync(RSubAppraisalID);
+            var samplingUFTDetail = await _context.SamplingUFTDetail.Where(x=> x.RSubAppraisalID == RSubAppraisalID).FirstOrDefaultAsync();
             if (samplingUFTDetail == null)
             {
                 return NotFound();

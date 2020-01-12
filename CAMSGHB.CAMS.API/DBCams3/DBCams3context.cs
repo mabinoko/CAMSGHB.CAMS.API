@@ -97,7 +97,7 @@ namespace CAMSGHB.CAMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                //optionsBuilder.UseSqlServer("Server=207.148.69.13;Database=DBCams3;User ID=os1;Password=os1");
+                optionsBuilder.UseSqlServer("Server=207.148.69.13;Database=CAMS-TEST2;User ID=os1;Password=os1");
                 //Server=35.189.173.218;Database=dbCams;User ID=sa;Password=g5pH25k2Q.fa
                 //optionsBuilder.UseSqlServer("Server=35.189.173.218;Database=dbCams;User ID=sa;Password=g5pH25k2Q.fa");
             }

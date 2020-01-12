@@ -459,7 +459,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var samplingworkLTF = await _context.SamplingworkLTF.FindAsync(RAppraisalID);
+            var samplingworkLTF = await _context.SamplingworkLTF.Where(x=> x.RAppraisalID == RAppraisalID).FirstOrDefaultAsync();
             if (samplingworkLTF == null)
             {
                 return NotFound();

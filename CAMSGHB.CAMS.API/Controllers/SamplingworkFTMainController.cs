@@ -292,7 +292,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var samplingworkFTMain = await _context.SamplingworkFTMain.FindAsync(RAppraisalID);
+            var samplingworkFTMain = await _context.SamplingworkFTMain.Where(x=> x.RAppraisalID == RAppraisalID).FirstOrDefaultAsync();
             if (samplingworkFTMain == null)
             {
                 return NotFound();

@@ -474,7 +474,7 @@ namespace CAMSGHB.CAMS.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var samplingworkBZP = await _context.SamplingworkBZP.FindAsync(RAppraisalID);
+            var samplingworkBZP = await _context.SamplingworkBZP.Where(x=> x.RAppraisalID == RAppraisalID).FirstOrDefaultAsync();
             if (samplingworkBZP == null)
             {
                 return NotFound();

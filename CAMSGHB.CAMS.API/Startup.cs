@@ -37,6 +37,7 @@ namespace CAMSGHB_CAMS_API
                  .AllowAnyOrigin()
                  .AllowAnyMethod());
             });
+            services.AddHttpsRedirection(options => options.HttpsPort = 5003);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<DBCams3context>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddSwaggerGen(c =>
@@ -48,6 +49,7 @@ namespace CAMSGHB_CAMS_API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
             String SwaggerEndpoint = "/swagger/v1/swagger.json";
 
             if (env.IsDevelopment())
@@ -57,7 +59,7 @@ namespace CAMSGHB_CAMS_API
             else
             {
                 app.UseHsts();
-                SwaggerEndpoint = "/CAMS/swagger/v1/swagger.json";
+                SwaggerEndpoint = "/ss_cams/swagger/v1/swagger.json";
             }
             app.UseSwagger();
             app.UseSwaggerUI(c =>
